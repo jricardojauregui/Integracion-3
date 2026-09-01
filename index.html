@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Integración de Aplicaciones Computacionales — José Ricardo Jáuregui Guevara</title>
+<meta name="description" content="Portafolio de ejercicios guiados y tareas de Integración de Aplicaciones Computacionales, UDEM. Reportes completos con código fuente, evidencias y documentos.">
+<meta name="author" content="José Ricardo Jáuregui Guevara">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/estilos.css">
+</head>
+<body data-pagina="inicio">
+
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<nav class="nav" aria-label="Navegación principal">
+  <div class="nav__interior">
+    <a class="nav__marca" href="index.html">
+      <svg class="nav__glifo" viewBox="0 0 22 22" aria-hidden="true">
+        <rect x="1" y="1" width="20" height="20" rx="6" fill="currentColor" opacity="0.1"/>
+        <path d="M6 14.5c0-2.2 1.8-4 4-4 .3-2 2-3.5 4.1-3.5 1 0 1.9.35 2.6.95" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="10" cy="14.5" r="1.4" fill="currentColor"/>
+        <circle cx="16" cy="14.5" r="1.4" fill="currentColor"/>
+        <path d="M11.4 14.5h3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>Integración de Aplicaciones Computacionales</span>
+    </a>
+    <p class="nav__titulo">Portafolio de entregas</p>
+    <div class="nav__enlaces">
+      <a class="nav__enlace" href="index.html" data-nav="inicio">Inicio</a>
+      <a class="nav__enlace" href="ejercicios.html" data-nav="ejercicios">Ejercicios guiados</a>
+      <a class="nav__enlace" href="tareas.html" data-nav="tareas">Tareas</a>
+    </div>
+  </div>
+</nav>
+
+<main id="contenido">
+
+  <section class="portada">
+    <div class="portada__aura" aria-hidden="true"></div>
+    <div class="env portada__contenido">
+      <header class="cabecera cabecera--amplia">
+        <p class="eyebrow">Integración de Aplicaciones Computacionales · UDEM 2026</p>
+        <h1 class="titulo-grande">Portafolio de<br>entregas del semestre</h1>
+        <p class="entrada">Cada entrega es un reporte completo: el desarrollo escrito, las evidencias
+          en imagen, los documentos incrustados y el código fuente que se puede leer aquí mismo,
+          copiar o descargar archivo por archivo.</p>
+        <div class="portada__meta">
+          <span><strong>José Ricardo Jáuregui Guevara</strong></span>
+          <span>Matrícula 608995</span>
+          <span><a href="mailto:jose.jauregui@udem.edu">jose.jauregui@udem.edu</a></span>
+        </div>
+        <div class="acciones" style="margin-top: var(--u8)">
+          <a class="boton boton--primario" href="ejercicios.html">Ver ejercicios guiados</a>
+          <a class="boton boton--contorno" href="tareas.html">Ver tareas</a>
+        </div>
+      </header>
+
+      <div class="metricas">
+        <div class="metrica">
+          <p class="metrica__valor">6</p>
+          <p class="metrica__etiqueta">Entregas publicadas</p>
+        </div>
+        <div class="metrica">
+          <p class="metrica__valor">75</p>
+          <p class="metrica__etiqueta">Archivos de código</p>
+        </div>
+        <div class="metrica">
+          <p class="metrica__valor">52</p>
+          <p class="metrica__etiqueta">Imágenes de evidencia</p>
+        </div>
+        <div class="metrica">
+          <p class="metrica__valor">106</p>
+          <p class="metrica__etiqueta">Pruebas automatizadas</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="env">
+      <div class="seccion__cabecera">
+        <h2 class="seccion__titulo">Ejercicios guiados</h2>
+        <p class="seccion__nota"><a href="ejercicios.html">Ver todos</a></p>
+      </div>
+      <div class="rejilla rejilla--dos">
+
+        <a class="tarjeta" href="ejercicios/ejercicio-01.html">
+          <div class="tarjeta__lienzo"><img src="imagenes/ejercicio-01/min/iaas.jpg" alt="" loading="lazy"></div>
+          <div class="tarjeta__cuerpo">
+            <p class="tarjeta__indice">Ejercicio guiado 1</p>
+            <h3 class="tarjeta__titulo">Clasificador de modelos de servicios Cloud</h3>
+            <p class="tarjeta__subtitulo">Java · Swing · CLI · Regex · NLP</p>
+            <p class="tarjeta__resumen">Aplicación de escritorio en Java que clasifica una descripción
+              en lenguaje natural como IaaS, PaaS, SaaS o FaaS. GUI y CLI comparten el mismo motor.</p>
+            <div class="tarjeta__pie">
+              <span>5 imágenes</span><span>21 archivos</span><span>9 casos de prueba</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="tarjeta" href="ejercicios/ejercicio-02.html">
+          <div class="tarjeta__lienzo"><img src="imagenes/ejercicio-02/catalogo-portadas.png" alt="" loading="lazy"></div>
+          <div class="tarjeta__cuerpo">
+            <p class="tarjeta__indice">Ejercicio guiado 2</p>
+            <h3 class="tarjeta__titulo">Librería en línea — Monolito Node.js + PostgreSQL</h3>
+            <p class="tarjeta__subtitulo">Node.js · Express · EJS · PostgreSQL · Nginx</p>
+            <p class="tarjeta__resumen">Aplicación monolítica con normalización 4FN, procedimientos
+              almacenados, autenticación por roles, una vulnerabilidad de seguridad real detectada y
+              corregida, 23 pruebas ejecutadas y despliegue con reverse proxy.</p>
+            <div class="tarjeta__pie">
+              <span>26 imágenes</span><span>26 archivos</span><span>23 casos de prueba</span>
+      
+    
+        </a>
+
+
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="env">
+      <div class="seccion__cabecera">
+        <h2 class="seccion__titulo">Tareas</h2>
+        <p class="seccion__nota"><a href="tareas.html">Ver todas</a></p>
+      </div>
+      <div class="rejilla rejilla--dos">
+
+        <a class="tarjeta" href="tareas/tarea-01.html">
+          <div class="tarjeta__lienzo"><img src="imagenes/tarea-01/min/figura-1-gui-inicio.jpg" alt="" loading="lazy"></div>
+          <div class="tarjeta__cuerpo">
+            <p class="tarjeta__indice">Tarea 1</p>
+            <h3 class="tarjeta__titulo">Clasificador Cloud en Python</h3>
+            <p class="tarjeta__subtitulo">Python · Tkinter · argparse · NLP</p>
+            <p class="tarjeta__resumen">Reimplementación en Python del clasificador de Java, con
+              separación por capas, pipeline de NLP de seis pasos y 31 pruebas automatizadas.</p>
+            <div class="tarjeta__pie">
+              <span>14 imágenes</span><span>13 archivos</span><span>31 pruebas</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="tarjeta" href="tareas/tarea-02.html">
+          <div class="tarjeta__lienzo"><img src="imagenes/tarea-02/min/mapa-conceptual-cloud.jpg" alt="" loading="lazy"></div>
+          <div class="tarjeta__cuerpo">
+            <p class="tarjeta__indice">Tarea 2</p>
+            <h3 class="tarjeta__titulo">Mapa conceptual comparativo de modelos Cloud</h3>
+            <p class="tarjeta__subtitulo">IaaS · PaaS · SaaS · FaaS</p>
+            <p class="tarjeta__resumen">Mapa que compara los cuatro modelos de servicio en diez
+              dimensiones, desde el nivel de control hasta los ejemplos reales de cada proveedor.</p>
+            <div class="tarjeta__pie">
+              <span>Mapa vectorial</span><span>4 modelos</span><span>16 servicios reales</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="tarjeta" href="tareas/tarea-03.html">
+          <div class="tarjeta__lienzo tarjeta__lienzo--vacio">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M14 6h13l9 9v27H14z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+              <path d="M27 6v9h9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+            </svg>
+            <span>MINIENSAYO</span>
+          </div>
+          <div class="tarjeta__cuerpo">
+            <p class="tarjeta__indice">Tarea 3</p>
+            <h3 class="tarjeta__titulo">¿Cloud-Native o Cloud-Enabled?</h3>
+            <p class="tarjeta__subtitulo">Miniensayo · Caso Netflix</p>
+            <p class="tarjeta__resumen">Análisis técnico de la arquitectura de Netflix para determinar
+              si su migración a AWS la convierte en cloud-native o solo en cloud-enabled.</p>
+            <div class="tarjeta__pie">
+              <span>Texto completo</span><span>PDF incrustado</span><span>3 referencias</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="tarjeta" href="tareas/tarea-04.html">
+          <div class="tarjeta__lienzo"><img src="imagenes/tarea-04/min/arquitectura-final.jpg" alt="" loading="lazy"></div>
+          <div class="tarjeta__cuerpo">
+            <p class="tarjeta__indice">Tarea 4</p>
+            <h3 class="tarjeta__titulo">Arquitectura Cloud híbrida para banca móvil</h3>
+            <p class="tarjeta__subtitulo">Prompt Engineering · FastAPI · 43 pruebas</p>
+            <p class="tarjeta__resumen">Diseño asistido por IA en seis iteraciones, con 15
+              vulnerabilidades catalogadas, corregidas y demostradas con código ejecutable.</p>
+            <div class="tarjeta__pie">
+              <span>6 imágenes</span><span>18 archivos</span><span>43 pruebas</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie" id="contacto">
+  <div class="env">
+    <div class="pie__rejilla">
+      <div>
+        <p class="pie__titulo">Autor</p>
+        <p class="pie__nombre">José Ricardo Jáuregui Guevara</p>
+        <p class="pie__linea">Matrícula 608995</p>
+        <p class="pie__linea">Universidad de Monterrey</p>
+        <p class="pie__linea"><a href="mailto:jose.jauregui@udem.edu">jose.jauregui@udem.edu</a></p>
+      </div>
+      <div>
+        <p class="pie__titulo">Materia</p>
+        <ul class="pie__lista">
+          <li>Integración de Aplicaciones Computacionales</li>
+          <li>Cloud Computing + IA</li>
+          <li>Dr. Raúl Morales Salcedo</li>
+        </ul>
+      </div>
+      <div>
+        <p class="pie__titulo">Entregas</p>
+        <ul class="pie__lista">
+          <li><a href="ejercicios/ejercicio-01.html">Ejercicio guiado 1</a></li>
+          <li><a href="ejercicios/ejercicio-02.html">Ejercicio guiado 2</a></li>
+          <li><a href="tareas/tarea-01.html">Tarea 1 — Clasificador en Python</a></li>
+          <li><a href="tareas/tarea-02.html">Tarea 2 — Mapa conceptual</a></li>
+          <li><a href="tareas/tarea-03.html">Tarea 3 — Miniensayo</a></li>
+          <li><a href="tareas/tarea-04.html">Tarea 4 — Arquitectura Cloud</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="pie__nota">Portafolio de entregas · <span data-anio>2026</span> · Todo el material puede leerse en línea, copiarse o descargarse por archivo y en un ZIP por entrega.</p>
+  </div>
+</footer>
+
+<script src="assets/js/visor.js"></script>
+<script src="assets/js/sitio.js"></script>
+</body>
+</html>

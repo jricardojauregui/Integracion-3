@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tarea 3 — ¿Cloud-Native o Cloud-Enabled? · Integración de Aplicaciones Computacionales</title>
+<meta name="description" content="Miniensayo sobre Cloud-Native frente a Cloud-Enabled, analizando la arquitectura de Netflix sobre AWS.">
+<meta name="author" content="José Ricardo Jáuregui Guevara">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/estilos.css">
+</head>
+<body data-pagina="tareas">
+
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<nav class="nav" aria-label="Navegación principal">
+  <div class="nav__interior">
+    <a class="nav__marca" href="../index.html">
+      <svg class="nav__glifo" viewBox="0 0 22 22" aria-hidden="true">
+        <rect x="1" y="1" width="20" height="20" rx="6" fill="currentColor" opacity="0.1"/>
+        <path d="M6 14.5c0-2.2 1.8-4 4-4 .3-2 2-3.5 4.1-3.5 1 0 1.9.35 2.6.95" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="10" cy="14.5" r="1.4" fill="currentColor"/>
+        <circle cx="16" cy="14.5" r="1.4" fill="currentColor"/>
+        <path d="M11.4 14.5h3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>Integración de Aplicaciones Computacionales</span>
+    </a>
+    <p class="nav__titulo">Tarea 3</p>
+    <div class="nav__enlaces">
+      <a class="nav__enlace" href="../index.html" data-nav="inicio">Inicio</a>
+      <a class="nav__enlace" href="../ejercicios.html" data-nav="ejercicios">Ejercicios guiados</a>
+      <a class="nav__enlace" href="../tareas.html" data-nav="tareas">Tareas</a>
+    </div>
+  </div>
+</nav>
+
+<main id="contenido">
+  <div class="env">
+
+    <header class="cabecera">
+      <a class="volver" href="../tareas.html">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 3l-5 5 5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Volver a tareas
+      </a>
+      <p class="eyebrow">Tarea 3 · Miniensayo</p>
+      <h1 class="titulo-grande">¿Cloud-Native o Cloud-Enabled? Análisis de una aplicación real</h1>
+      <p class="entrada">Selección de una aplicación real —Netflix— para determinar, con argumentos
+        técnicos, si puede considerarse Cloud-Native, Cloud-Enabled o una combinación de ambos.</p>
+      <ul class="ficha-datos">
+        <li><strong>Alumno:</strong> José Ricardo Jáuregui Guevara</li>
+        <li><strong>Matrícula:</strong> 608995</li>
+        <li><strong>Profesor:</strong> Dr. Raúl Morales Salcedo</li>
+        <li><strong>Fecha de entrega:</strong> 17 de agosto de 2026</li>
+      </ul>
+    </header>
+
+    <div class="doble">
+      <div class="informe">
+
+        <h2 id="introduccion">Introducción</h2>
+        <p>El término cloud-native se trata sobre aplicaciones diseñadas desde el inicio para estar
+          implementadas en la nube utilizando microservicios, contenedores, orquestación dinámica, APIs,
+          automatización, observabilidad y tolerancia a fallos. Cloud-enabled se refiere a sistemas
+          monolíticos que se migran a la nube sin un rediseño profundo, generalmente mediante
+          lift-and-shift (una estrategia de migración a la nube en la que tomas una aplicación existente
+          y la mueves a la nube casi sin modificarla), aprovechando solo parcialmente los beneficios del
+          modelo elástico.</p>
+
+        <h2 id="aplicacion">Aplicación seleccionada</h2>
+        <p>Netflix es una plataforma global de streaming con más de 200 millones de suscriptores en
+          donde se puede ver contenido multimedia como películas, series y, hasta hace poco tiempo,
+          videojuegos y partidos de deportes. Tras una grave caída en 2008 en donde no pudieron enviar
+          DVD's a sus consumidores, decidieron migrarla a la nube de AWS, completando el proceso en 2016.
+          Desde entonces, se ha convertido en un referente de arquitectura cloud-native.</p>
+
+        <h2 id="analisis">Análisis</h2>
+        <p>Netflix migró su base a la nube en 2008 y terminó en 2016. Se tardaron tanto porque no
+          hicieron un lift and shift, sino que reescribieron toda su arquitectura para poderla adaptar a
+          la nube. No fue un trabajo de un equipo, sino un reenfoque de toda la compañía, y diseñaron un
+          sistema escalable con microservicios en AWS. Se eligió AWS porque en su inicio era el único
+          proveedor que podía ofrecer un servicio que se escalara globalmente. Hoy en día tienen los
+          siguientes componentes:</p>
+
+        <div class="tabla-marco">
+          <table>
+            <thead><tr><th>Capa</th><th>Qué contiene</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Capa de cliente</strong></td><td>Aplicaciones para móviles, televisión y web.</td></tr>
+              <tr><td><strong>Puerta de enlace de API</strong></td><td>Solicitudes dirigidas a los microservicios correspondientes.</td></tr>
+              <tr><td><strong>Capa de microservicios</strong></td><td>Servicios sin estado que se ejecutan en Titus (gestión de contenedores).</td></tr>
+              <tr><td><strong>Capa de datos</strong></td><td>Cassandra para metadatos, S3 para almacenamiento de contenido y Kafka para transmisión de eventos.</td></tr>
+              <tr><td><strong>Observabilidad y despliegues</strong></td><td>Atlas (monitorización), Spinnaker (CI/CD) y Chaos Monkey para pruebas de fallos.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Su arquitectura de microservicios les permite seguir corriendo la aplicación para el usuario
+          si un servicio se cae, algo que una aplicación monolítica sería incapaz de hacer.</p>
+
+        <h2 id="argumentacion">Argumentación Cloud-Native vs. Cloud-Enabled</h2>
+        <p>Netflix no es un ejemplo de cloud-enabled porque no se limitó a trasladar un sistema
+          existente a la nube sin cambios. Al contrario, rediseñó su aplicación completa para aprovechar
+          las capacidades elásticas, la automatización y la resiliencia del entorno cloud. Aunque algunos
+          componentes como Titus o Spinnaker son herramientas propias, el conjunto del sistema cumple con
+          los criterios de la Cloud Native Computing Foundation: microservicios, contenedores,
+          orquestación, APIs declarativas y automatización. Por eso se clasifica claramente como
+          cloud-native.</p>
+
+        <h2 id="conclusion">Conclusión personal</h2>
+        <p>Me parece muy interesante que Netflix no haya tomado el camino fácil de simplemente mover sus
+          servidores a AWS, sino que haya decidido reescribir toda su plataforma para funcionar realmente
+          como una aplicación de nube. Esto demuestra que el cloud-native no es solo una cuestión de
+          infraestructura, sino de diseño y cultura. La lección que me llevo es que migrar una aplicación
+          heredada sin rediseñarla puede dar beneficios a corto plazo, pero solo un enfoque cloud-native
+          permite escalar globalmente y resistir fallos sin que el usuario lo note.</p>
+        <p>Además, el caso de Netflix muestra que la adopción cloud-native exige un cambio profundo en la
+          forma de trabajar: equipos autónomos, despliegues continuos y una cultura que acepta el fallo
+          como algo normal. No todas las empresas están dispuestas a invertir ese esfuerzo, y por eso
+          muchas optan por el lift-and-shift como paso inicial. Sin embargo, a largo plazo, esa decisión
+          puede limitar la capacidad de innovar y escalar. La resiliencia de Netflix no es un accidente
+          sino el resultado de diseñar para el fracaso. Esto me hace pensar que la verdadera ventaja
+          competitiva en la nube no está en dónde se ejecuta el código, sino en cómo se diseña, se
+          despliega y se opera. Las empresas que quieran seguir el ejemplo de Netflix deben asumir que la
+          transformación tecnológica es también una transformación cultural.</p>
+
+        <h2 id="referencias">Referencias bibliográficas</h2>
+        <ul>
+          <li>Netflix Innovators. (2026, August 7). <em>Amazon Web Services, Inc.</em>
+            <a href="https://aws.amazon.com/es/solutions/case-studies/innovators/netflix/" target="_blank" rel="noopener">aws.amazon.com/es/solutions/case-studies/innovators/netflix</a></li>
+          <li>Completing the Netflix Cloud Migration - About Netflix. (2016). <em>About Netflix.</em>
+            <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener">about.netflix.com/en/news/completing-the-netflix-cloud-migration</a></li>
+          <li>Ismail Kovvuru. (2025, November 11). <em>How Netflix Designed Its Global Cloud Architecture
+            on AWS: The Real Reason Netflix Moved to AWS.</em> Medium.
+            <a href="https://medium.com/@ismailkovvuru/how-netflix-designed-its-global-cloud-architecture-on-aws-the-real-reason-netflix-moved-to-aws-0d823994ce46" target="_blank" rel="noopener">Ver artículo</a></li>
+        </ul>
+
+        <h2 id="documento">Documento original</h2>
+        <p>El miniensayo tal como se entregó, incrustado a continuación.</p>
+
+        <div class="pdf">
+          <div class="pdf__barra">
+            <p class="pdf__titulo">¿Cloud-Native o Cloud-Enabled? Análisis de una aplicación real</p>
+            <a class="boton boton--plano boton--compacto" href="../documentos/tarea-03/cloud-native-o-cloud-enabled_-analisis-de-una-aplicacion-real.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
+            <a class="boton boton--plano boton--compacto" href="../documentos/tarea-03/cloud-native-o-cloud-enabled_-analisis-de-una-aplicacion-real.pdf" download>Descargar</a>
+          </div>
+          <iframe class="pdf__marco" src="../documentos/tarea-03/cloud-native-o-cloud-enabled_-analisis-de-una-aplicacion-real.pdf#view=FitH" title="Miniensayo Cloud-Native o Cloud-Enabled"></iframe>
+          <p class="pdf__respaldo">Si el visor no carga en tu navegador, usa «Abrir en pestaña».</p>
+        </div>
+
+        <h2 id="requisitos">Verificación de requisitos</h2>
+        <p>Revisión punto por punto contra el enunciado de la Tarea 3.</p>
+        <ul class="requisitos">
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Miniensayo completo</strong><span>Texto íntegro en la página y PDF original incrustado</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Aplicación real seleccionada</strong><span>Netflix, con el contexto de su migración de 2008 a 2016</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Estructura pedida</strong><span>Introducción → aplicación seleccionada → análisis tecnológico → argumentación → conclusiones</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Aspectos técnicos considerados</strong><span>Monolítico vs. microservicios, contenedores y orquestación, APIs, escalabilidad, alta disponibilidad, observabilidad, CI/CD y tolerancia a fallos</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Referencias bibliográficas</strong><span>Tres fuentes: AWS, About Netflix y un artículo técnico</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Conclusión personal</strong><span>Sección final, sobre la dimensión cultural de la adopción cloud-native</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 3v3.6M6 8.8v.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="requisito__texto"><strong>Imágenes o diagramas relevantes</strong><span>Pendiente: el enunciado los pide y la entrega original no incluía ninguno</span></span></li>
+        </ul>
+
+      </div>
+
+      <aside class="lateral">
+        <div class="panel">
+          <p class="panel__titulo">Descargar la entrega</p>
+          <p class="panel__nota">Miniensayo en PDF</p>
+          <a class="boton boton--primario" href="../descargables/tarea-03-completo.zip" download style="width:100%">
+            <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v8m0 0l-3.2-3.2M9 11l3.2-3.2M3.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Descargar ZIP
+          </a>
+        </div>
+
+        <div class="panel panel--indice">
+          <p class="panel__titulo">Contenido</p>
+          <ul class="indice">
+            <li><a href="#introduccion">Introducción</a></li>
+            <li><a href="#aplicacion">Aplicación seleccionada</a></li>
+            <li><a href="#analisis">Análisis</a></li>
+            <li><a href="#argumentacion">Argumentación</a></li>
+            <li><a href="#conclusion">Conclusión personal</a></li>
+            <li><a href="#referencias">Referencias</a></li>
+            <li><a href="#documento">Documento original</a></li>
+            <li><a href="#requisitos">Verificación de requisitos</a></li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <p class="panel__titulo">Conceptos</p>
+          <div class="etiquetas" style="margin-top: var(--u3)">
+            <span class="etiqueta">Cloud-Native</span>
+            <span class="etiqueta">Cloud-Enabled</span>
+            <span class="etiqueta">Microservicios</span>
+            <span class="etiqueta">CNCF</span>
+            <span class="etiqueta">Netflix</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+  </div>
+</main>
+
+<footer class="pie">
+  <div class="env">
+    <div class="pie__rejilla">
+      <div>
+        <p class="pie__titulo">Autor</p>
+        <p class="pie__nombre">José Ricardo Jáuregui Guevara</p>
+        <p class="pie__linea">Matrícula 608995</p>
+        <p class="pie__linea">Universidad de Monterrey</p>
+        <p class="pie__linea"><a href="mailto:jose.jauregui@udem.edu">jose.jauregui@udem.edu</a></p>
+      </div>
+      <div>
+        <p class="pie__titulo">Materia</p>
+        <ul class="pie__lista">
+          <li>Integración de Aplicaciones Computacionales</li>
+          <li>Cloud Computing + IA</li>
+          <li>Dr. Raúl Morales Salcedo</li>
+        </ul>
+      </div>
+      <div>
+        <p class="pie__titulo">Secciones</p>
+        <ul class="pie__lista">
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="../ejercicios.html">Ejercicios guiados</a></li>
+          <li><a href="../tareas.html">Tareas</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="pie__nota">Portafolio de entregas · <span data-anio>2026</span></p>
+  </div>
+</footer>
+
+<script src="../assets/js/visor.js"></script>
+<script src="../assets/js/sitio.js"></script>
+</body>
+</html>

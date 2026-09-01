@@ -1,0 +1,344 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1080" width="1500" height="1080" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="flecha" markerWidth="10" markerHeight="10" refX="9" refY="3.2" orient="auto">
+      <path d="M0,0 L0,6.4 L9,3.2 z" fill="#334155"/>
+    </marker>
+    <marker id="flechaSeg" markerWidth="10" markerHeight="10" refX="9" refY="3.2" orient="auto">
+      <path d="M0,0 L0,6.4 L9,3.2 z" fill="#B45309"/>
+    </marker>
+    <marker id="flechaAs" markerWidth="10" markerHeight="10" refX="9" refY="3.2" orient="auto">
+      <path d="M0,0 L0,6.4 L9,3.2 z" fill="#7C3AED"/>
+    </marker>
+  </defs>
+
+  <rect width="1500" height="1080" fill="#FFFFFF"/>
+  <text x="40" y="42" font-size="24" font-weight="bold" fill="#0F172A">Arquitectura de nube híbrida — Aplicación de banca móvil</text>
+  <text x="40" y="66" font-size="13" fill="#64748B">Versión final (post-iteraciones). Multi-AZ activo-activo · DR en segunda región · Core bancario on-premises</text>
+
+  <!-- Leyenda -->
+  <g font-size="11">
+    <rect x="1090" y="26" width="374" height="52" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+    <line x1="1102" y1="44" x2="1132" y2="44" stroke="#334155" stroke-width="2" marker-end="url(#flecha)"/>
+    <text x="1138" y="48" fill="#334155">Flujo síncrono</text>
+    <line x1="1240" y1="44" x2="1270" y2="44" stroke="#7C3AED" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#flechaAs)"/>
+    <text x="1276" y="48" fill="#7C3AED">Asíncrono / eventos</text>
+    <line x1="1102" y1="66" x2="1132" y2="66" stroke="#B45309" stroke-width="2.5" marker-end="url(#flechaSeg)"/>
+    <text x="1138" y="70" fill="#B45309">Enlace privado cifrado</text>
+    <rect x="1240" y="59" width="14" height="12" fill="#FEF3C7" stroke="#F59E0B"/>
+    <text x="1260" y="70" fill="#92400E">Control de seguridad</text>
+  </g>
+
+  <!-- ============ USUARIO ============ -->
+  <g>
+    <rect x="40" y="110" width="150" height="92" rx="10" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+    <text x="115" y="140" font-size="14" font-weight="bold" fill="#1E40AF" text-anchor="middle">USUARIO</text>
+    <text x="115" y="162" font-size="11" fill="#1E3A8A" text-anchor="middle">Cliente del banco</text>
+    <text x="115" y="180" font-size="11" fill="#1E3A8A" text-anchor="middle">Biometría / MFA</text>
+  </g>
+
+  <!-- ============ APP MOVIL ============ -->
+  <g>
+    <rect x="40" y="230" width="150" height="150" rx="10" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+    <text x="115" y="256" font-size="13" font-weight="bold" fill="#1E40AF" text-anchor="middle">APP MÓVIL</text>
+    <text x="115" y="276" font-size="10" fill="#1E3A8A" text-anchor="middle">iOS / Android</text>
+    <line x1="55" y1="286" x2="175" y2="286" stroke="#93C5FD"/>
+    <text x="115" y="303" font-size="9.5" fill="#1E3A8A" text-anchor="middle">Certificate pinning</text>
+    <text x="115" y="319" font-size="9.5" fill="#1E3A8A" text-anchor="middle">Secure Enclave/Keystore</text>
+    <text x="115" y="335" font-size="9.5" fill="#1E3A8A" text-anchor="middle">Detección root/jailbreak</text>
+    <text x="115" y="351" font-size="9.5" fill="#1E3A8A" text-anchor="middle">Idempotency-Key</text>
+    <text x="115" y="367" font-size="9.5" fill="#1E3A8A" text-anchor="middle">Sin datos en caché local</text>
+  </g>
+
+  <!-- ============ FRONTERA CLOUD ============ -->
+  <rect x="225" y="96" width="890" height="960" rx="14" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-dasharray="10,5"/>
+  <rect x="245" y="86" width="200" height="24" rx="6" fill="#2563EB"/>
+  <text x="345" y="103" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">FRONTERA CLOUD (VPC)</text>
+
+  <!-- Borde / seguridad perimetral -->
+  <g>
+    <rect x="245" y="126" width="200" height="128" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="345" y="148" font-size="12" font-weight="bold" fill="#92400E" text-anchor="middle">BORDE / EDGE</text>
+    <text x="345" y="170" font-size="10" fill="#78350F" text-anchor="middle">CDN + WAF</text>
+    <text x="345" y="187" font-size="10" fill="#78350F" text-anchor="middle">Anti-DDoS (L3/L4/L7)</text>
+    <text x="345" y="204" font-size="10" fill="#78350F" text-anchor="middle">OWASP Top 10 rules</text>
+    <text x="345" y="221" font-size="10" fill="#78350F" text-anchor="middle">Rate limit + geobloqueo</text>
+    <text x="345" y="238" font-size="10" fill="#78350F" text-anchor="middle">mTLS terminación</text>
+  </g>
+
+  <!-- API Gateway -->
+  <g>
+    <rect x="245" y="276" width="200" height="112" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+    <text x="345" y="298" font-size="12" font-weight="bold" fill="#1E40AF" text-anchor="middle">API GATEWAY</text>
+    <text x="345" y="318" font-size="10" fill="#1E3A8A" text-anchor="middle">Multi-AZ · Regional</text>
+    <text x="345" y="335" font-size="10" fill="#1E3A8A" text-anchor="middle">Validación JWT (authorizer)</text>
+    <text x="345" y="352" font-size="10" fill="#1E3A8A" text-anchor="middle">Throttling por cliente</text>
+    <text x="345" y="369" font-size="10" fill="#1E3A8A" text-anchor="middle">Versionado · esquemas</text>
+  </g>
+
+  <!-- Identidad -->
+  <g>
+    <rect x="475" y="126" width="200" height="128" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="575" y="148" font-size="12" font-weight="bold" fill="#92400E" text-anchor="middle">IDENTIDAD (IdP)</text>
+    <text x="575" y="169" font-size="10" fill="#78350F" text-anchor="middle">OAuth2 / OIDC</text>
+    <text x="575" y="186" font-size="10" fill="#78350F" text-anchor="middle">MFA + biometría</text>
+    <text x="575" y="203" font-size="10" fill="#78350F" text-anchor="middle">Access 10 min · Refresh 7 d</text>
+    <text x="575" y="220" font-size="10" fill="#78350F" text-anchor="middle">Revocación (jti)</text>
+    <text x="575" y="237" font-size="10" fill="#78350F" text-anchor="middle">Federación → AD on-prem</text>
+  </g>
+
+  <!-- Secretos / KMS -->
+  <g>
+    <rect x="705" y="126" width="180" height="128" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="795" y="148" font-size="12" font-weight="bold" fill="#92400E" text-anchor="middle">SECRETOS / KMS</text>
+    <text x="795" y="169" font-size="10" fill="#78350F" text-anchor="middle">Vault / Secrets Mgr</text>
+    <text x="795" y="186" font-size="10" fill="#78350F" text-anchor="middle">Rotación automática</text>
+    <text x="795" y="203" font-size="10" fill="#78350F" text-anchor="middle">HSM para llaves raíz</text>
+    <text x="795" y="220" font-size="10" fill="#78350F" text-anchor="middle">Cifrado sobre (envelope)</text>
+    <text x="795" y="237" font-size="10" fill="#78350F" text-anchor="middle">Sin secretos en imagen</text>
+  </g>
+
+  <!-- Observabilidad -->
+  <g>
+    <rect x="915" y="126" width="180" height="128" rx="8" fill="#F3E8FF" stroke="#7C3AED" stroke-width="1.5"/>
+    <text x="1005" y="148" font-size="12" font-weight="bold" fill="#5B21B6" text-anchor="middle">OBSERVABILIDAD</text>
+    <text x="1005" y="169" font-size="10" fill="#4C1D95" text-anchor="middle">OpenTelemetry</text>
+    <text x="1005" y="186" font-size="10" fill="#4C1D95" text-anchor="middle">Métricas · Logs · Trazas</text>
+    <text x="1005" y="203" font-size="10" fill="#4C1D95" text-anchor="middle">SLO + alertas por síntoma</text>
+    <text x="1005" y="220" font-size="10" fill="#4C1D95" text-anchor="middle">SIEM · detección fraude</text>
+    <text x="1005" y="237" font-size="10" fill="#4C1D95" text-anchor="middle">Correlation-ID extremo a extremo</text>
+  </g>
+
+  <!-- ===== CAPA DE SERVICIOS ===== -->
+  <rect x="475" y="276" width="620" height="230" rx="10" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.5"/>
+  <text x="785" y="298" font-size="13" font-weight="bold" fill="#166534" text-anchor="middle">BACKEND — Microservicios en contenedores (EKS/AKS, multi-AZ, HPA)</text>
+
+  <g font-size="10">
+    <rect x="495" y="312" width="132" height="76" rx="6" fill="#DCFCE7" stroke="#16A34A"/>
+    <text x="561" y="332" font-size="11" font-weight="bold" fill="#166534" text-anchor="middle">Cuentas</text>
+    <text x="561" y="350" fill="#14532D" text-anchor="middle">Saldos, consulta</text>
+    <text x="561" y="366" fill="#14532D" text-anchor="middle">Autorización por</text>
+    <text x="561" y="380" fill="#14532D" text-anchor="middle">recurso (anti-IDOR)</text>
+
+    <rect x="643" y="312" width="132" height="76" rx="6" fill="#DCFCE7" stroke="#16A34A"/>
+    <text x="709" y="332" font-size="11" font-weight="bold" fill="#166534" text-anchor="middle">Transferencias</text>
+    <text x="709" y="350" fill="#14532D" text-anchor="middle">Idempotencia</text>
+    <text x="709" y="366" fill="#14532D" text-anchor="middle">Locks ordenados</text>
+    <text x="709" y="380" fill="#14532D" text-anchor="middle">Saga + compensación</text>
+
+    <rect x="791" y="312" width="132" height="76" rx="6" fill="#DCFCE7" stroke="#16A34A"/>
+    <text x="857" y="332" font-size="11" font-weight="bold" fill="#166534" text-anchor="middle">Antifraude</text>
+    <text x="857" y="350" fill="#14532D" text-anchor="middle">Scoring en línea</text>
+    <text x="857" y="366" fill="#14532D" text-anchor="middle">Reglas + ML</text>
+    <text x="857" y="380" fill="#14532D" text-anchor="middle">Step-up auth</text>
+
+    <rect x="939" y="312" width="136" height="76" rx="6" fill="#DCFCE7" stroke="#16A34A"/>
+    <text x="1007" y="332" font-size="11" font-weight="bold" fill="#166534" text-anchor="middle">Perfil / Catálogo</text>
+    <text x="1007" y="350" fill="#14532D" text-anchor="middle">Datos no sensibles</text>
+    <text x="1007" y="366" fill="#14532D" text-anchor="middle">Preferencias</text>
+    <text x="1007" y="380" fill="#14532D" text-anchor="middle">Tokenización PAN</text>
+  </g>
+
+  <!-- Serverless -->
+  <rect x="495" y="400" width="580" height="92" rx="8" fill="#FEF9C3" stroke="#CA8A04" stroke-width="1.5"/>
+  <text x="785" y="420" font-size="12" font-weight="bold" fill="#854D0E" text-anchor="middle">FUNCIONES SERVERLESS (FaaS) — event-driven, escala a cero</text>
+  <g font-size="9.5" fill="#713F12">
+    <rect x="508" y="430" width="128" height="50" rx="5" fill="#FEF08A" stroke="#CA8A04"/>
+    <text x="572" y="448" text-anchor="middle" font-weight="bold">Notificaciones</text>
+    <text x="572" y="463" text-anchor="middle">Push / SMS / correo</text>
+    <text x="572" y="475" text-anchor="middle">disparo por evento</text>
+
+    <rect x="646" y="430" width="128" height="50" rx="5" fill="#FEF08A" stroke="#CA8A04"/>
+    <text x="710" y="448" text-anchor="middle" font-weight="bold">Reconciliación</text>
+    <text x="710" y="463" text-anchor="middle">Movimientos</text>
+    <text x="710" y="475" text-anchor="middle">PENDIENTE → core</text>
+
+    <rect x="784" y="430" width="128" height="50" rx="5" fill="#FEF08A" stroke="#CA8A04"/>
+    <text x="848" y="448" text-anchor="middle" font-weight="bold">Estados de cuenta</text>
+    <text x="848" y="463" text-anchor="middle">Generación PDF</text>
+    <text x="848" y="475" text-anchor="middle">nocturna</text>
+
+    <rect x="922" y="430" width="140" height="50" rx="5" fill="#FEF08A" stroke="#CA8A04"/>
+    <text x="992" y="448" text-anchor="middle" font-weight="bold">Procesado imágenes</text>
+    <text x="992" y="463" text-anchor="middle">Depósito de cheque</text>
+    <text x="992" y="475" text-anchor="middle">OCR · antivirus</text>
+  </g>
+
+  <!-- Mensajería -->
+  <g>
+    <rect x="475" y="522" width="290" height="88" rx="8" fill="#F3E8FF" stroke="#7C3AED" stroke-width="1.5"/>
+    <text x="620" y="543" font-size="12" font-weight="bold" fill="#5B21B6" text-anchor="middle">BUS DE EVENTOS / COLAS</text>
+    <text x="620" y="562" font-size="10" fill="#4C1D95" text-anchor="middle">Kafka / EventBridge + SQS</text>
+    <text x="620" y="578" font-size="10" fill="#4C1D95" text-anchor="middle">Desacopla la nube del core on-prem</text>
+    <text x="620" y="594" font-size="10" fill="#4C1D95" text-anchor="middle">DLQ · reintentos · outbox pattern</text>
+  </g>
+
+  <!-- Cache -->
+  <g>
+    <rect x="785" y="522" width="290" height="88" rx="8" fill="#FFE4E6" stroke="#E11D48" stroke-width="1.5"/>
+    <text x="930" y="543" font-size="12" font-weight="bold" fill="#9F1239" text-anchor="middle">CACHÉ DISTRIBUIDA</text>
+    <text x="930" y="562" font-size="10" fill="#881337" text-anchor="middle">Redis (multi-AZ, replicado)</text>
+    <text x="930" y="578" font-size="10" fill="#881337" text-anchor="middle">Sesiones · rate limit global</text>
+    <text x="930" y="594" font-size="10" fill="#881337" text-anchor="middle">Claves de idempotencia (TTL 24 h)</text>
+  </g>
+
+  <!-- DATOS -->
+  <rect x="245" y="640" width="850" height="188" rx="10" fill="#F1F5F9" stroke="#475569" stroke-width="1.5"/>
+  <text x="670" y="662" font-size="13" font-weight="bold" fill="#1E293B" text-anchor="middle">CAPA DE DATOS EN LA NUBE — cifrado en reposo (KMS) y en tránsito (TLS 1.3)</text>
+
+  <g font-size="10">
+    <rect x="265" y="676" width="196" height="136" rx="6" fill="#E2E8F0" stroke="#475569"/>
+    <text x="363" y="697" font-size="11" font-weight="bold" fill="#1E293B" text-anchor="middle">BD Transaccional</text>
+    <text x="363" y="716" fill="#334155" text-anchor="middle">PostgreSQL gestionada</text>
+    <text x="363" y="732" fill="#334155" text-anchor="middle">Multi-AZ · failover auto</text>
+    <text x="363" y="748" fill="#334155" text-anchor="middle">Réplicas de lectura</text>
+    <text x="363" y="764" fill="#334155" text-anchor="middle">PITR · backups cifrados</text>
+    <text x="363" y="780" fill="#334155" text-anchor="middle">Montos en centavos (int)</text>
+    <text x="363" y="796" fill="#334155" text-anchor="middle">UNIQUE idempotencia</text>
+
+    <rect x="475" y="676" width="196" height="136" rx="6" fill="#E2E8F0" stroke="#475569"/>
+    <text x="573" y="697" font-size="11" font-weight="bold" fill="#1E293B" text-anchor="middle">Almacén de objetos</text>
+    <text x="573" y="716" fill="#334155" text-anchor="middle">S3 / Blob Storage</text>
+    <text x="573" y="732" fill="#334155" text-anchor="middle">Comprobantes, cheques</text>
+    <text x="573" y="748" fill="#334155" text-anchor="middle">Versionado + Object Lock</text>
+    <text x="573" y="764" fill="#334155" text-anchor="middle">Cifrado SSE-KMS</text>
+    <text x="573" y="780" fill="#334155" text-anchor="middle">URLs prefirmadas (corta)</text>
+    <text x="573" y="796" fill="#334155" text-anchor="middle">Ciclo de vida → archivo</text>
+
+    <rect x="685" y="676" width="196" height="136" rx="6" fill="#E2E8F0" stroke="#475569"/>
+    <text x="783" y="697" font-size="11" font-weight="bold" fill="#1E293B" text-anchor="middle">NoSQL / Series</text>
+    <text x="783" y="716" fill="#334155" text-anchor="middle">DynamoDB / Cosmos</text>
+    <text x="783" y="732" fill="#334155" text-anchor="middle">Sesiones, feature flags</text>
+    <text x="783" y="748" fill="#334155" text-anchor="middle">Bitácora de auditoría</text>
+    <text x="783" y="764" fill="#334155" text-anchor="middle">append-only, inmutable</text>
+    <text x="783" y="780" fill="#334155" text-anchor="middle">Escala automática</text>
+
+    <rect x="895" y="676" width="180" height="136" rx="6" fill="#FEE2E2" stroke="#DC2626"/>
+    <text x="985" y="697" font-size="11" font-weight="bold" fill="#991B1B" text-anchor="middle">Bóveda de tokens</text>
+    <text x="985" y="716" fill="#7F1D1D" text-anchor="middle">Tokenización de PAN</text>
+    <text x="985" y="732" fill="#7F1D1D" text-anchor="middle">La nube NUNCA</text>
+    <text x="985" y="748" fill="#7F1D1D" text-anchor="middle">almacena el PAN real</text>
+    <text x="985" y="764" fill="#7F1D1D" text-anchor="middle">Reduce alcance PCI-DSS</text>
+    <text x="985" y="780" fill="#7F1D1D" text-anchor="middle">Detokeniza solo el core</text>
+  </g>
+
+  <!-- DR -->
+  <g>
+    <rect x="245" y="848" width="850" height="72" rx="8" fill="#ECFEFF" stroke="#0891B2" stroke-width="1.5"/>
+    <text x="670" y="870" font-size="12" font-weight="bold" fill="#155E75" text-anchor="middle">RECUPERACIÓN ANTE DESASTRES — Segunda región (warm standby)</text>
+    <text x="670" y="890" font-size="10" fill="#164E63" text-anchor="middle">Réplica asíncrona de BD · Replicación cruzada de objetos · IaC versionada (Terraform) · DNS con health-check y failover</text>
+    <text x="670" y="908" font-size="10" fill="#164E63" text-anchor="middle">Objetivos: RTO ≤ 30 min · RPO ≤ 5 min · Pruebas de failover trimestrales (game days)</text>
+  </g>
+
+  <!-- Gobierno -->
+  <g>
+    <rect x="245" y="936" width="850" height="104" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5"/>
+    <text x="670" y="957" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">GOBIERNO TRANSVERSAL</text>
+    <g font-size="9.5" fill="#475569">
+      <text x="330" y="978" text-anchor="middle">CI/CD con firma</text>
+      <text x="330" y="993" text-anchor="middle">de artefactos</text>
+      <text x="330" y="1008" text-anchor="middle">SAST · DAST · SCA</text>
+      <text x="330" y="1023" text-anchor="middle">IaC scanning</text>
+
+      <text x="500" y="978" text-anchor="middle">Zero Trust</text>
+      <text x="500" y="993" text-anchor="middle">mTLS entre servicios</text>
+      <text x="500" y="1008" text-anchor="middle">Service mesh</text>
+      <text x="500" y="1023" text-anchor="middle">Mínimo privilegio (IAM)</text>
+
+      <text x="670" y="978" text-anchor="middle">Segmentación de red</text>
+      <text x="670" y="993" text-anchor="middle">Subredes privadas</text>
+      <text x="670" y="1008" text-anchor="middle">Security groups</text>
+      <text x="670" y="1023" text-anchor="middle">Sin IP pública en datos</text>
+
+      <text x="845" y="978" text-anchor="middle">Cumplimiento</text>
+      <text x="845" y="993" text-anchor="middle">PCI-DSS · CNBV</text>
+      <text x="845" y="1008" text-anchor="middle">Retención de bitácoras</text>
+      <text x="845" y="1023" text-anchor="middle">Residencia de datos</text>
+
+      <text x="1010" y="978" text-anchor="middle">FinOps</text>
+      <text x="1010" y="993" text-anchor="middle">Etiquetado por centro</text>
+      <text x="1010" y="1008" text-anchor="middle">de costo · presupuestos</text>
+      <text x="1010" y="1023" text-anchor="middle">Alertas de desviación</text>
+    </g>
+  </g>
+
+  <!-- ============ FRONTERA ON-PREMISES ============ -->
+  <rect x="1145" y="276" width="320" height="552" rx="14" fill="none" stroke="#B45309" stroke-width="2.5" stroke-dasharray="10,5"/>
+  <rect x="1165" y="266" width="270" height="24" rx="6" fill="#B45309"/>
+  <text x="1300" y="283" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">FRONTERA ON-PREMISES (Datacenter)</text>
+
+  <g>
+    <rect x="1165" y="306" width="280" height="118" rx="8" fill="#FEF3C7" stroke="#B45309" stroke-width="1.5"/>
+    <text x="1305" y="328" font-size="12" font-weight="bold" fill="#78350F" text-anchor="middle">CORE BANCARIO</text>
+    <text x="1305" y="348" font-size="10" fill="#78350F" text-anchor="middle">Mainframe / COBOS legado</text>
+    <text x="1305" y="365" font-size="10" fill="#78350F" text-anchor="middle">Libro mayor · asientos contables</text>
+    <text x="1305" y="382" font-size="10" fill="#78350F" text-anchor="middle">Fuente de verdad del saldo</text>
+    <text x="1305" y="399" font-size="9.5" fill="#92400E" text-anchor="middle" font-style="italic">Permanece on-prem: riesgo y costo</text>
+    <text x="1305" y="414" font-size="9.5" fill="#92400E" text-anchor="middle" font-style="italic">de migrar &gt; beneficio</text>
+  </g>
+
+  <g>
+    <rect x="1165" y="440" width="280" height="104" rx="8" fill="#FEF3C7" stroke="#B45309" stroke-width="1.5"/>
+    <text x="1305" y="462" font-size="12" font-weight="bold" fill="#78350F" text-anchor="middle">HSM / LLAVES CRIPTOGRÁFICAS</text>
+    <text x="1305" y="482" font-size="10" fill="#78350F" text-anchor="middle">PIN, CVV, llaves de emisión</text>
+    <text x="1305" y="499" font-size="10" fill="#78350F" text-anchor="middle">Certificado FIPS 140-2 Nivel 3</text>
+    <text x="1305" y="516" font-size="9.5" fill="#92400E" text-anchor="middle" font-style="italic">Permanece on-prem: exigencia</text>
+    <text x="1305" y="531" font-size="9.5" fill="#92400E" text-anchor="middle" font-style="italic">regulatoria y custodia física</text>
+  </g>
+
+  <g>
+    <rect x="1165" y="560" width="280" height="96" rx="8" fill="#FEF3C7" stroke="#B45309" stroke-width="1.5"/>
+    <text x="1305" y="582" font-size="12" font-weight="bold" fill="#78350F" text-anchor="middle">SISTEMAS REGULATORIOS</text>
+    <text x="1305" y="602" font-size="10" fill="#78350F" text-anchor="middle">SPEI / cámara de compensación</text>
+    <text x="1305" y="619" font-size="10" fill="#78350F" text-anchor="middle">Reportes CNBV · PLD/AML</text>
+    <text x="1305" y="636" font-size="9.5" fill="#92400E" text-anchor="middle" font-style="italic">Conectividad dedicada obligatoria</text>
+  </g>
+
+  <g>
+    <rect x="1165" y="672" width="280" height="86" rx="8" fill="#FEF3C7" stroke="#B45309" stroke-width="1.5"/>
+    <text x="1305" y="694" font-size="12" font-weight="bold" fill="#78350F" text-anchor="middle">DIRECTORIO CORPORATIVO</text>
+    <text x="1305" y="714" font-size="10" fill="#78350F" text-anchor="middle">Active Directory / LDAP</text>
+    <text x="1305" y="731" font-size="10" fill="#78350F" text-anchor="middle">Identidad de empleados</text>
+    <text x="1305" y="748" font-size="9.5" fill="#92400E" text-anchor="middle" font-style="italic">Federado con el IdP en nube</text>
+  </g>
+
+  <g>
+    <rect x="1165" y="774" width="280" height="42" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.5"/>
+    <text x="1305" y="791" font-size="11" font-weight="bold" fill="#92400E" text-anchor="middle">DATA WAREHOUSE HISTÓRICO</text>
+    <text x="1305" y="807" font-size="9.5" fill="#78350F" text-anchor="middle">Retención legal · costo de egreso alto</text>
+  </g>
+
+  <!-- ============ CONEXIONES ============ -->
+  <line x1="115" y1="202" x2="115" y2="228" stroke="#334155" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="190" y1="300" x2="243" y2="300" stroke="#334155" stroke-width="2" marker-end="url(#flecha)"/>
+  <text x="216" y="292" font-size="9" fill="#334155" text-anchor="middle">TLS 1.3</text>
+
+  <line x1="345" y1="254" x2="345" y2="274" stroke="#334155" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="445" y1="318" x2="473" y2="318" stroke="#334155" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="445" y1="332" x2="473" y2="200" stroke="#B45309" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#flechaSeg)"/>
+  <text x="470" y="262" font-size="9" fill="#B45309">valida token</text>
+
+  <line x1="620" y1="492" x2="620" y2="520" stroke="#7C3AED" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#flechaAs)"/>
+  <line x1="785" y1="506" x2="785" y2="520" stroke="#334155" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="620" y1="610" x2="620" y2="638" stroke="#334155" stroke-width="2" marker-end="url(#flecha)"/>
+  <line x1="930" y1="610" x2="930" y2="638" stroke="#334155" stroke-width="2" marker-end="url(#flecha)"/>
+
+  <!-- Enlace hibrido: el mas importante -->
+  <path d="M 765 566 L 1000 566 L 1000 365 L 1163 365" fill="none" stroke="#B45309" stroke-width="3.5" marker-end="url(#flechaSeg)"/>
+  <rect x="1000" y="530" width="150" height="58" rx="6" fill="#FFFBEB" stroke="#B45309" stroke-width="1.5"/>
+  <text x="1075" y="548" font-size="10" font-weight="bold" fill="#92400E" text-anchor="middle">ENLACE HÍBRIDO</text>
+  <text x="1075" y="563" font-size="9" fill="#78350F" text-anchor="middle">Direct Connect / ExpressRoute</text>
+  <text x="1075" y="576" font-size="9" fill="#78350F" text-anchor="middle">+ VPN IPSec de respaldo</text>
+
+  <path d="M 1163 480 L 1120 480 L 1120 620 L 900 620" fill="none" stroke="#B45309" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#flechaSeg)"/>
+  <path d="M 1163 714 L 1130 714 L 1130 200 L 677 200" fill="none" stroke="#B45309" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#flechaSeg)"/>
+
+  <!-- Nota patrones resiliencia -->
+  <rect x="790" y="628" width="0" height="0"/>
+  <g>
+    <rect x="1145" y="848" width="320" height="72" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+    <text x="1305" y="869" font-size="11" font-weight="bold" fill="#991B1B" text-anchor="middle">PROTECCIÓN DEL ENLACE</text>
+    <text x="1305" y="887" font-size="9.5" fill="#7F1D1D" text-anchor="middle">Timeout 2 s · 3 reintentos con backoff+jitter</text>
+    <text x="1305" y="902" font-size="9.5" fill="#7F1D1D" text-anchor="middle">Circuit breaker · bulkhead · cola de respaldo</text>
+    <text x="1305" y="915" font-size="9.5" fill="#7F1D1D" text-anchor="middle">Degradación elegante: solo lectura si el core cae</text>
+  </g>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" width="900" height="430" font-family="Helvetica, Arial, sans-serif">
+  <defs><marker id="f" markerWidth="10" markerHeight="10" refX="9" refY="3.2" orient="auto"><path d="M0,0 L0,6.4 L9,3.2 z" fill="#334155"/></marker></defs>
+  <rect width="900" height="430" fill="#FFFFFF"/>
+  <text x="30" y="34" font-size="19" font-weight="bold" fill="#0F172A">Arquitectura v1 — primera respuesta de la IA (SIN iterar)</text>
+  <text x="30" y="55" font-size="12" fill="#DC2626">Plausible en la superficie, pero con puntos únicos de falla y huecos de seguridad marcados en rojo</text>
+
+  <rect x="30" y="80" width="120" height="70" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="90" y="108" font-size="12" font-weight="bold" fill="#1E40AF" text-anchor="middle">App móvil</text>
+  <text x="90" y="128" font-size="10" fill="#1E3A8A" text-anchor="middle">iOS / Android</text>
+
+  <rect x="200" y="80" width="120" height="70" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="260" y="108" font-size="12" font-weight="bold" fill="#1E40AF" text-anchor="middle">API Gateway</text>
+  <text x="260" y="128" font-size="10" fill="#1E3A8A" text-anchor="middle">(instancia única)</text>
+
+  <rect x="370" y="80" width="130" height="70" rx="8" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.5"/>
+  <text x="435" y="103" font-size="12" font-weight="bold" fill="#166534" text-anchor="middle">Backend API</text>
+  <text x="435" y="122" font-size="10" fill="#14532D" text-anchor="middle">Monolito</text>
+  <text x="435" y="138" font-size="10" fill="#14532D" text-anchor="middle">(1 sola AZ)</text>
+
+  <rect x="550" y="80" width="120" height="70" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.5"/>
+  <text x="610" y="103" font-size="12" font-weight="bold" fill="#1E293B" text-anchor="middle">Base de datos</text>
+  <text x="610" y="122" font-size="10" fill="#334155" text-anchor="middle">Instancia única</text>
+  <text x="610" y="138" font-size="10" fill="#334155" text-anchor="middle">sin réplica</text>
+
+  <rect x="720" y="80" width="150" height="70" rx="8" fill="#FEF3C7" stroke="#B45309" stroke-width="1.5"/>
+  <text x="795" y="103" font-size="12" font-weight="bold" fill="#78350F" text-anchor="middle">Core bancario</text>
+  <text x="795" y="122" font-size="10" fill="#78350F" text-anchor="middle">on-premises</text>
+  <text x="795" y="138" font-size="10" fill="#78350F" text-anchor="middle">(VPN simple)</text>
+
+  <rect x="200" y="200" width="120" height="60" rx="8" fill="#FEF9C3" stroke="#CA8A04" stroke-width="1.5"/>
+  <text x="260" y="224" font-size="11" font-weight="bold" fill="#854D0E" text-anchor="middle">Auth (JWT)</text>
+  <text x="260" y="243" font-size="10" fill="#713F12" text-anchor="middle">sin expiración</text>
+
+  <rect x="370" y="200" width="130" height="60" rx="8" fill="#FEF9C3" stroke="#CA8A04" stroke-width="1.5"/>
+  <text x="435" y="224" font-size="11" font-weight="bold" fill="#854D0E" text-anchor="middle">Lambda</text>
+  <text x="435" y="243" font-size="10" fill="#713F12" text-anchor="middle">notificaciones</text>
+
+  <rect x="550" y="200" width="120" height="60" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="1.5"/>
+  <text x="610" y="224" font-size="11" font-weight="bold" fill="#1E293B" text-anchor="middle">S3</text>
+  <text x="610" y="243" font-size="10" fill="#334155" text-anchor="middle">documentos</text>
+
+  <line x1="150" y1="115" x2="198" y2="115" stroke="#334155" stroke-width="2" marker-end="url(#f)"/>
+  <line x1="320" y1="115" x2="368" y2="115" stroke="#334155" stroke-width="2" marker-end="url(#f)"/>
+  <line x1="500" y1="115" x2="548" y2="115" stroke="#334155" stroke-width="2" marker-end="url(#f)"/>
+  <line x1="670" y1="115" x2="718" y2="115" stroke="#334155" stroke-width="2" marker-end="url(#f)"/>
+  <line x1="260" y1="150" x2="260" y2="198" stroke="#334155" stroke-width="2" marker-end="url(#f)"/>
+  <line x1="435" y1="150" x2="435" y2="198" stroke="#334155" stroke-width="2" marker-end="url(#f)"/>
+  <line x1="610" y1="150" x2="610" y2="198" stroke="#334155" stroke-width="2" marker-end="url(#f)"/>
+
+  <rect x="30" y="290" width="840" height="118" rx="8" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="45" y="313" font-size="13" font-weight="bold" fill="#991B1B">Lo que la primera versión NO incluía</text>
+  <g font-size="10.5" fill="#7F1D1D">
+    <text x="45" y="336">✗ Sin multi-AZ ni redundancia: la BD y el backend son puntos únicos de falla</text>
+    <text x="45" y="354">✗ Sin plan de recuperación ante desastres (RTO/RPO no definidos)</text>
+    <text x="45" y="372">✗ Sin protección del enlace híbrido: un core lento tumba toda la API</text>
+    <text x="45" y="390">✗ Sin WAF, sin rate limiting, sin MFA, sin tokenización de PAN</text>
+    <text x="460" y="336">✗ Sin observabilidad: no hay trazas, métricas ni correlation-ID</text>
+    <text x="460" y="354">✗ Sin idempotencia: un reintento duplica la transferencia</text>
+    <text x="460" y="372">✗ Sin caché ni bus de eventos: acoplamiento síncrono total</text>
+    <text x="460" y="390">✗ Sin análisis de costos ni de cumplimiento (PCI-DSS / CNBV)</text>
+  </g>
+</svg>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tarea 2 — Mapa conceptual comparativo de modelos Cloud · Integración de Aplicaciones Computacionales</title>
+<meta name="description" content="Mapa conceptual comparativo de IaaS, PaaS, SaaS y FaaS: definición, responsabilidades, ventajas, casos de uso y ejemplos reales.">
+<meta name="author" content="José Ricardo Jáuregui Guevara">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/estilos.css">
+</head>
+<body data-pagina="tareas">
+
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<nav class="nav" aria-label="Navegación principal">
+  <div class="nav__interior">
+    <a class="nav__marca" href="../index.html">
+      <svg class="nav__glifo" viewBox="0 0 22 22" aria-hidden="true">
+        <rect x="1" y="1" width="20" height="20" rx="6" fill="currentColor" opacity="0.1"/>
+        <path d="M6 14.5c0-2.2 1.8-4 4-4 .3-2 2-3.5 4.1-3.5 1 0 1.9.35 2.6.95" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="10" cy="14.5" r="1.4" fill="currentColor"/>
+        <circle cx="16" cy="14.5" r="1.4" fill="currentColor"/>
+        <path d="M11.4 14.5h3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>Integración de Aplicaciones Computacionales</span>
+    </a>
+    <p class="nav__titulo">Tarea 2</p>
+    <div class="nav__enlaces">
+      <a class="nav__enlace" href="../index.html" data-nav="inicio">Inicio</a>
+      <a class="nav__enlace" href="../ejercicios.html" data-nav="ejercicios">Ejercicios guiados</a>
+      <a class="nav__enlace" href="../tareas.html" data-nav="tareas">Tareas</a>
+    </div>
+  </div>
+</nav>
+
+<main id="contenido">
+  <div class="env">
+
+    <header class="cabecera">
+      <a class="volver" href="../tareas.html">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 3l-5 5 5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Volver a tareas
+      </a>
+      <p class="eyebrow">Tarea 2 · Trabajo en casa</p>
+      <h1 class="titulo-grande">Mapa conceptual comparativo de modelos Cloud</h1>
+      <p class="entrada">Comprender y representar visualmente las diferencias entre IaaS, PaaS, SaaS y
+        FaaS, y relacionarlas con servicios reales de AWS, Microsoft Azure, Google Cloud y Oracle Cloud
+        Infrastructure.</p>
+      <ul class="ficha-datos">
+        <li><strong>Alumno:</strong> José Ricardo Jáuregui Guevara</li>
+        <li><strong>Matrícula:</strong> 608995</li>
+        <li><strong>Profesor:</strong> Dr. Raúl Morales Salcedo</li>
+        <li><strong>Fecha de entrega:</strong> 17 de agosto de 2026</li>
+      </ul>
+    </header>
+
+    <div class="doble">
+      <div class="informe">
+
+        <h2 id="objetivo">Objetivo</h2>
+        <p>Comprender y representar visualmente las diferencias entre los cuatro modelos de servicio en
+          la nube y relacionarlas con servicios reales. Para cada modelo el mapa incluye definición,
+          características principales, qué administra el proveedor, qué administra el cliente, ventajas
+          y desventajas, casos de uso, nivel de control, nivel de abstracción, escalabilidad y ejemplos
+          reales.</p>
+        <p>El mapa se elaboró en Canva y se representa la relación:</p>
+        <div class="bloque"><pre>Mayor control del usuario → IaaS → PaaS → SaaS → Mayor abstracción</pre></div>
+
+        <h2 id="mapa">Mapa conceptual</h2>
+        <p>El mapa está en formato vectorial, así que se puede ampliar sin perder nitidez. Pulsa sobre
+          él para verlo a pantalla completa y hacer zoom.</p>
+
+        <div class="galeria galeria--1" data-galeria>
+          <button type="button" class="miniatura miniatura--alta" data-completa="../imagenes/tarea-02/mapa-conceptual-cloud.png" data-min="../imagenes/tarea-02/min/mapa-conceptual-cloud.jpg" data-titulo="Mapa conceptual comparativo de modelos Cloud: IaaS, PaaS, SaaS y FaaS">
+            <span class="miniatura__marco"><img src="../imagenes/tarea-02/min/mapa-conceptual-cloud.jpg" alt="Mapa conceptual comparativo de los modelos IaaS, PaaS, SaaS y FaaS" loading="lazy"></span>
+            <span class="miniatura__pie">Mapa conceptual comparativo de modelos Cloud
+              <svg class="miniatura__lupa" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.4 10.4L14 14M5.2 7h3.6M7 5.2v3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+          </button>
+        </div>
+
+        <div class="acciones" style="margin-bottom: var(--u8)">
+          <a class="boton boton--contorno" href="https://canva.link/qib6y9astfwzp6j" target="_blank" rel="noopener">
+            Abrir el mapa original en Canva
+          </a>
+          <a class="boton boton--plano" href="../documentos/tarea-02/mapa-conceptual-cloud.svg" download>Descargar el SVG en alta resolución</a>
+        </div>
+
+        <h2 id="contenido-mapa">Contenido del mapa</h2>
+        <p>El texto completo de cada tarjeta del mapa, transcrito para poder leerlo y buscarlo sin
+          ampliar la imagen.</p>
+
+        <h3 id="definiciones">Definición de cada modelo</h3>
+        <div class="tabla-marco">
+          <table>
+            <thead><tr><th>Modelo</th><th>Descripción</th></tr></thead>
+            <tbody>
+              <tr><td><strong>IaaS</strong></td><td>Infraestructura como servicio. Proporciona recursos de cómputo, almacenamiento y redes bajo demanda. El usuario controla el SO y las aplicaciones. Mayor control, menor abstracción.</td></tr>
+              <tr><td><strong>PaaS</strong></td><td>Plataforma como servicio. Ofrece un entorno administrado para desarrollar, desplegar y ejecutar aplicaciones sin gestionar la infraestructura subyacente. Control medio, abstracción media.</td></tr>
+              <tr><td><strong>SaaS</strong></td><td>Software como servicio. Aplicación completa lista para usar a través de internet, generalmente por suscripción. El usuario solo utiliza el software. Menor control, alta abstracción.</td></tr>
+              <tr><td><strong>FaaS</strong></td><td>Ejecuta funciones individuales activadas por eventos, sin aprovisionar ni gestionar servidores. El código se ejecuta y se factura por uso real. Abstracción muy alta, control bajo-medio.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="responsabilidades">Qué administra el proveedor y qué el cliente</h3>
+        <div class="tabla-marco">
+          <table>
+            <thead><tr><th>Modelo</th><th>Proveedor</th><th>Cliente</th><th>Control</th><th>Abstracción</th><th>Escalabilidad</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>IaaS</strong></td>
+                <td>Centro de datos, hardware, virtualización, red, seguridad física.</td>
+                <td>Sistema operativo, middleware, runtime, datos, aplicaciones, parches, firewalls.</td>
+                <td>Alto</td><td>Baja</td><td>Alta, configurada por el usuario</td>
+              </tr>
+              <tr>
+                <td><strong>PaaS</strong></td>
+                <td>SO, runtime, middleware, escalado, balanceo de carga, parches.</td>
+                <td>Código de la aplicación, datos, configuración.</td>
+                <td>Medio</td><td>Media</td><td>Automática, administrada por el proveedor</td>
+              </tr>
+              <tr>
+                <td><strong>SaaS</strong></td>
+                <td>Infraestructura, plataforma, aplicación, actualizaciones, seguridad, disponibilidad.</td>
+                <td>Cuentas de usuario, permisos, datos ingresados.</td>
+                <td>Bajo</td><td>Alta</td><td>Automática, transparente</td>
+              </tr>
+              <tr>
+                <td><strong>FaaS</strong></td>
+                <td>Infraestructura completa, entorno de ejecución, escalado, disponibilidad, disparadores.</td>
+                <td>Código de la función, dependencias, variables de entorno, configuración de eventos.</td>
+                <td>Bajo-medio</td><td>Muy alta</td><td>Automática hasta cero</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="ventajas">Ventajas y desventajas</h3>
+        <div class="tabla-marco">
+          <table>
+            <thead><tr><th>Modelo</th><th>Ventajas</th><th>Desventajas</th></tr></thead>
+            <tbody>
+              <tr><td><strong>IaaS</strong></td><td>Control total y flexibilidad, sin inversión inicial en hardware, escalable.</td><td>Requiere administración de SO y seguridad, mayor responsabilidad operativa, posible mala configuración.</td></tr>
+              <tr><td><strong>PaaS</strong></td><td>Desarrollo rápido, sin gestión de SO ni parches, escalado automático, enfoque en el código.</td><td>Menos control, posible dependencia del proveedor, limitaciones de runtimes.</td></tr>
+              <tr><td><strong>SaaS</strong></td><td>Implementación inmediata, sin mantenimiento, accesible desde cualquier lugar, costo predecible por suscripción.</td><td>Personalización limitada, preocupaciones de privacidad, requiere internet, vendor lock-in.</td></tr>
+              <tr><td><strong>FaaS</strong></td><td>Sin gestión de servidores, pago por ejecución real, escala instantáneamente, ideal para cargas esporádicas.</td><td>Latencia de arranque en frío, límites de tiempo, naturaleza sin estado, depuración compleja.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="casos-uso">Casos de uso y ejemplos reales</h3>
+        <div class="tabla-marco">
+          <table>
+            <thead><tr><th>Modelo</th><th>Casos de uso</th><th>Ejemplos reales</th></tr></thead>
+            <tbody>
+              <tr><td><strong>IaaS</strong></td><td>Migración lift-and-shift, entornos de prueba, recuperación ante desastres, HPC.</td><td>Amazon EC2 (VMs), Azure Virtual Machines, Google Compute Engine, Oracle OCI Compute.</td></tr>
+              <tr><td><strong>PaaS</strong></td><td>Aplicaciones web, APIs, microservicios, backends móviles.</td><td>AWS Elastic Beanstalk, Azure App Service, Google App Engine, Heroku, Oracle Autonomous Database.</td></tr>
+              <tr><td><strong>SaaS</strong></td><td>Correo electrónico, CRM, ERP, colaboración.</td><td>Microsoft 365, Google Workspace, Salesforce, Oracle Fusion Cloud Applications.</td></tr>
+              <tr><td><strong>FaaS</strong></td><td>Procesamiento de eventos, IoT, APIs, automatizaciones, procesamiento de imágenes.</td><td>AWS Lambda, Azure Functions, Google Cloud Functions, Oracle OCI Functions.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="explicacion">Explicación: el eje control–abstracción</h2>
+        <p>El mapa se organiza sobre una sola idea: los cuatro modelos no son categorías sueltas, sino
+          posiciones distintas sobre un mismo eje. A medida que se avanza de IaaS hacia SaaS, el
+          proveedor asume cada vez más capas de la pila —hardware, sistema operativo, runtime,
+          aplicación— y el cliente conserva cada vez menos. Se gana comodidad y se pierde control.</p>
+        <p>Ese intercambio se ve con claridad al leer la fila de responsabilidades: en IaaS el cliente
+          todavía administra sistema operativo, middleware, runtime, datos, aplicaciones, parches y
+          firewalls; en SaaS su responsabilidad se reduce a cuentas de usuario, permisos y los datos que
+          ingresa. Todo lo demás lo asume el proveedor.</p>
+        <p>Las ventajas y desventajas son consecuencia directa de esa misma posición, no características
+          independientes. Que IaaS ofrezca «control total y flexibilidad» y a la vez exija «mayor
+          responsabilidad operativa» es el mismo hecho descrito desde los dos lados. Lo mismo ocurre con
+          SaaS: la «implementación inmediata, sin mantenimiento» y la «personalización limitada» vienen
+          juntas necesariamente.</p>
+
+        <h3 id="faas">Dónde ubicar FaaS y por qué</h3>
+        <p>FaaS es el caso que no encaja limpiamente en la línea, y por eso el mapa lo coloca al final
+          del eje pero con una anotación distinta: <strong>abstracción muy alta, control bajo-medio</strong>.</p>
+        <p>El motivo es que FaaS separa las dos dimensiones que en los otros tres modelos van juntas. En
+          abstracción supera incluso a SaaS: el proveedor gestiona la infraestructura completa, el
+          entorno de ejecución, el escalado, la disponibilidad y los disparadores, y la escalabilidad
+          llega hasta cero, algo que ningún otro modelo hace. Pero en control el cliente sigue
+          escribiendo el código de la función, sus dependencias, las variables de entorno y la
+          configuración de eventos, cosa que un usuario de SaaS no hace en absoluto.</p>
+        <p>Por eso FaaS no es «el siguiente paso después de SaaS» sino una rama distinta: mantiene el
+          control del desarrollador sobre la lógica —como PaaS— mientras lleva la abstracción de la
+          infraestructura más lejos que cualquier otro modelo. Sus desventajas confirman esa posición
+          híbrida: la latencia de arranque en frío, los límites de tiempo de ejecución, la naturaleza sin
+          estado y la depuración compleja son problemas de quien programa, no de quien solo consume una
+          aplicación terminada.</p>
+
+        <h2 id="documento">Documento de la entrega</h2>
+        <p>El PDF con el enlace al mapa original, incrustado a continuación.</p>
+
+        <div class="pdf">
+          <div class="pdf__barra">
+            <p class="pdf__titulo">Enlace al mapa conceptual</p>
+            <a class="boton boton--plano boton--compacto" href="../documentos/tarea-02/enlace-mapa.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
+            <a class="boton boton--plano boton--compacto" href="../documentos/tarea-02/enlace-mapa.pdf" download>Descargar</a>
+          </div>
+          <iframe class="pdf__marco" src="../documentos/tarea-02/enlace-mapa.pdf#view=FitH" title="PDF con el enlace al mapa conceptual"></iframe>
+          <p class="pdf__respaldo">Si el visor no carga en tu navegador, usa «Abrir en pestaña».</p>
+        </div>
+
+        <h2 id="requisitos">Verificación de requisitos</h2>
+        <p>Revisión punto por punto contra el enunciado de la Tarea 2.</p>
+        <ul class="requisitos">
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Mapa conceptual comparativo completo</strong><span>Elaborado en Canva, con los cuatro modelos en paralelo</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Definición y características de cada modelo</strong><span>Tarjeta «Descripción» de las cuatro columnas</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Qué administra el proveedor y qué el cliente</strong><span>Tarjeta «Proveedor / Cliente», con control, abstracción y escalabilidad</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Ventajas, desventajas y casos de uso</strong><span>Tarjetas «Ventajas / Desventajas» y «Casos de Uso y Ejemplos»</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Servicios específicos de AWS, Azure, Google Cloud y Oracle</strong><span>16 servicios concretos, cuatro por modelo, no solo logotipos</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Relación mayor control → mayor abstracción</strong><span>Barra superior del mapa, explicada en la sección «El eje control–abstracción»</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Análisis de dónde ubicar FaaS, justificado</strong><span>Sección «Dónde ubicar FaaS y por qué»</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Imagen en alta resolución y versión embebida</strong><span>SVG vectorial descargable y visor con zoom en la página</span></span></li>
+          <li class="requisito"><span class="requisito__marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.2l2.4 2.4L9.5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="requisito__texto"><strong>Enlace al mapa original</strong><span>Enlace de Canva y PDF de la entrega incrustado</span></span></li>
+          <li class="requisito"><span class="requisito__marca requisito__marca--pendiente"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 3v3.6M6 8.8v.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span class="requisito__texto"><strong>Fuentes consultadas</strong><span>Pendiente: el enunciado pide listar las fuentes y no venían en la entrega original</span></span></li>
+        </ul>
+
+        <div class="aviso">
+          <p style="margin:0"><strong>Pendiente de completar.</strong> El enunciado pide incluir las
+            fuentes consultadas para investigar los servicios de cada proveedor. No estaban en los
+            archivos de la entrega, así que no se inventaron: al añadirlas basta con agregarlas como una
+            sección más en esta página, después del contenido del mapa.</p>
+        </div>
+
+      </div>
+
+      <aside class="lateral">
+        <div class="panel">
+          <p class="panel__titulo">Descargar la entrega</p>
+          <p class="panel__nota">Mapa en SVG y PNG más el documento PDF</p>
+          <a class="boton boton--primario" href="../descargables/tarea-02-completo.zip" download style="width:100%">
+            <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v8m0 0l-3.2-3.2M9 11l3.2-3.2M3.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Descargar ZIP
+          </a>
+        </div>
+
+        <div class="panel panel--indice">
+          <p class="panel__titulo">Contenido</p>
+          <ul class="indice">
+            <li><a href="#objetivo">Objetivo</a></li>
+            <li><a href="#mapa">Mapa conceptual</a></li>
+            <li><a href="#contenido-mapa">Contenido del mapa</a></li>
+            <li><a href="#explicacion">El eje control–abstracción</a></li>
+            <li><a href="#faas">Dónde ubicar FaaS</a></li>
+            <li><a href="#documento">Documento de la entrega</a></li>
+            <li><a href="#requisitos">Verificación de requisitos</a></li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <p class="panel__titulo">Herramientas</p>
+          <div class="etiquetas" style="margin-top: var(--u3)">
+            <span class="etiqueta">Canva</span>
+            <span class="etiqueta">SVG</span>
+            <span class="etiqueta">PDF</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+  </div>
+</main>
+
+<footer class="pie">
+  <div class="env">
+    <div class="pie__rejilla">
+      <div>
+        <p class="pie__titulo">Autor</p>
+        <p class="pie__nombre">José Ricardo Jáuregui Guevara</p>
+        <p class="pie__linea">Matrícula 608995</p>
+        <p class="pie__linea">Universidad de Monterrey</p>
+        <p class="pie__linea"><a href="mailto:jose.jauregui@udem.edu">jose.jauregui@udem.edu</a></p>
+      </div>
+      <div>
+        <p class="pie__titulo">Materia</p>
+        <ul class="pie__lista">
+          <li>Integración de Aplicaciones Computacionales</li>
+          <li>Cloud Computing + IA</li>
+          <li>Dr. Raúl Morales Salcedo</li>
+        </ul>
+      </div>
+      <div>
+        <p class="pie__titulo">Secciones</p>
+        <ul class="pie__lista">
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="../ejercicios.html">Ejercicios guiados</a></li>
+          <li><a href="../tareas.html">Tareas</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="pie__nota">Portafolio de entregas · <span data-anio>2026</span></p>
+  </div>
+</footer>
+
+<script src="../assets/js/visor.js"></script>
+<script src="../assets/js/sitio.js"></script>
+</body>
+</html>
