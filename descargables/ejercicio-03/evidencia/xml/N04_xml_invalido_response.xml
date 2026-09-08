@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:udem:iac:libreria:soap"><soap:Body><soap:Fault><faultcode>soap:Client</faultcode><faultstring>XML mal formado: unbound prefix: line 1, column 0</faultstring><detail><tns:LibreriaFaultDetail><tns:codigo>ENVELOPE_INVALIDO</tns:codigo><tns:descripcion>XML mal formado: unbound prefix: line 1, column 0</tns:descripcion></tns:LibreriaFaultDetail></detail></soap:Fault></soap:Body></soap:Envelope>

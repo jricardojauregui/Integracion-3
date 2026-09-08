@@ -1,0 +1,27 @@
+Capturas pendientes del Ejercicio guiado 3 (modulo SOAP).
+Guarda cada PNG en esta carpeta con EXACTAMENTE el nombre indicado;
+la galeria de ejercicios/ejercicio-03.html las mostrara automaticamente.
+
+  - paso1-archivos-en-vm.png
+  - paso2-pip-install.png
+  - paso3-sql-create-table.png
+  - paso4-verif-clasificadores.png
+  - paso4-verif-clasificaciones.png
+  - paso4-verif-clientes.png
+  - paso4-verif-duplicados.png
+  - paso4-soap-user-denegado.png
+  - paso5-wsdl-respondiendo.png
+  - paso5-servidor-corriendo.png
+  - paso6-p01-conceptos-pendientes.png
+  - paso6-p02-registro-exitoso.png
+  - paso6-p03-progreso.png
+  - paso6-n01-409-duplicado.png
+  - paso6-n02-concepto-inexistente.png
+  - paso6-n03-modelo-invalido.png
+  - paso6-n04-xml-invalido.png
+  - paso6-t1-estadisticas-ws-security.png
+  - paso6-soap-user-en-usuarios.png
+  - paso7-gui-registrar-clasificador.png
+  - paso7-gui-pendientes.png
+  - paso7-gui-registrar-clasificacion.png
+  - paso7-gui-soap-fault.png

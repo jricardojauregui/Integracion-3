@@ -1,0 +1,10 @@
+<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap-env:Body>
+    <ns0:RegistrarClasificacionRequest xmlns:ns0="urn:udem:iac:libreria:soap">
+      <ns0:idClasificador>1</ns0:idClasificador>
+      <ns0:isbn>978-0-14-118776-1</ns0:isbn>
+      <ns0:idConcepto>12</ns0:idConcepto>
+      <ns0:modeloCloud>SaaS</ns0:modeloCloud>
+    </ns0:RegistrarClasificacionRequest>
+  </soap-env:Body>
+</soap-env:Envelope>

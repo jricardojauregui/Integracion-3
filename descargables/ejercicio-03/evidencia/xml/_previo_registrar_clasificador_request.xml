@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:udem:iac:libreria:soap"><soap:Body><tns:RegistrarClasificadorRequest>
+<tns:nombre>Ricardo</tns:nombre><tns:apellido>Jáuregui</tns:apellido><tns:correo>ricardo@udem.edu</tns:correo>
+</tns:RegistrarClasificadorRequest></soap:Body></soap:Envelope>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="urn:udem:iac:libreria:soap"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="urn:udem:iac:libreria:soap"
+    name="LibraryClassifierService">
+
+  <!-- ===================================================================
+       TIPOS — inline. Solo lo que el cliente necesita (Paso 10: auditoría
+       del contrato) — nunca columnas internas como precio/stock/created_at.
+       =================================================================== -->
+  <wsdl:types>
+    <xs:schema xmlns:tns="urn:udem:iac:libreria:soap"
+               targetNamespace="urn:udem:iac:libreria:soap"
+               elementFormDefault="qualified">
+
+      <xs:simpleType name="IsbnType">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[0-9Xx-]{10,20}"/>
+        </xs:restriction>
+      </xs:simpleType>
+
+      <xs:simpleType name="ModeloCloudType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="IaaS"/>
+          <xs:enumeration value="PaaS"/>
+          <xs:enumeration value="SaaS"/>
+          <xs:enumeration value="FaaS"/>
+        </xs:restriction>
+      </xs:simpleType>
+
+      <!-- ===============================================================
+           1. ObtenerConceptosPendientes (mínimo obligatorio, Paso 9)
+           =============================================================== -->
+      <xs:element name="ObtenerConceptosPendientesRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="isbn" type="tns:IsbnType" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+      <!-- Tipo específico: solo isbn/título/categoría/concepto — nada de
+           precio, stock, id_formato ni columnas internas del catálogo. -->
+      <xs:complexType name="ConceptoPendienteType">
+        <xs:sequence>
+          <xs:element name="isbn" type="tns:IsbnType"/>
+          <xs:element name="tituloLibro" type="xs:string"/>
+          <xs:element name="categoria" type="xs:string"/>
+          <xs:element name="idConcepto" type="xs:long"/>
+          <xs:element name="nombreConcepto" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:element name="ObtenerConceptosPendientesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="concepto" type="tns:ConceptoPendienteType" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+      <!-- ===============================================================
+           2. RegistrarClasificacion (mínimo obligatorio, Paso 9)
+           Recibe clasificador + concepto + modelo de servicio.
+           =============================================================== -->
+      <xs:element name="RegistrarClasificacionRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="idClasificador" type="xs:long"/>
+            <xs:element name="isbn" type="tns:IsbnType"/>
+            <xs:element name="idConcepto" type="xs:long"/>
+            <xs:element name="modeloCloud" type="tns:ModeloCloudType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RegistrarClasificacionResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="idClasificacion" type="xs:long"/>
+            <xs:element name="mensaje" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+      <!-- ===============================================================
+           3. ObtenerProgresoUsuario (mínimo obligatorio, Paso 9)
+           "Usuario" aquí = clasificador del módulo, nunca la tabla
+           usuarios del monolito (ver Paso 1).
+           =============================================================== -->
+      <xs:element name="ObtenerProgresoUsuarioRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="idClasificador" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ObtenerProgresoUsuarioResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="idClasificador" type="xs:long"/>
+            <xs:element name="totalClasificados" type="xs:int"/>
+            <xs:element name="totalPendientes" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+      <!-- ===============================================================
+           4. RegistrarClasificador — extra sobre el mínimo del Paso 9,
+           necesario por el scope del Paso 2 (registrar clasificadores).
+           =============================================================== -->
+      <xs:element name="RegistrarClasificadorRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="nombre" type="xs:string"/>
+            <xs:element name="apellido" type="xs:string"/>
+            <xs:element name="correo" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RegistrarClasificadorResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="idClasificador" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+      <!-- ===============================================================
+           5. ObtenerEstadisticasPorModelo (Tarea 1, trabajo en casa) —
+           extiende el contrato SIN romper las 4 operaciones anteriores
+           (nuevo mensaje, no se toca ninguno existente). Protegida con
+           WS-Security simplificado: requiere <wsse:Security>
+           <wsse:UsernameToken><wsse:Username>/<wsse:Password></...>
+           en soap:Header (namespace wsse estándar de OASIS). Contraseña
+           nunca en texto plano en el servidor: se compara por hash.
+           =============================================================== -->
+      <xs:element name="ObtenerEstadisticasPorModeloRequest">
+        <xs:complexType/>
+      </xs:element>
+      <xs:element name="ObtenerEstadisticasPorModeloResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="totalIaaS" type="xs:int"/>
+            <xs:element name="totalPaaS" type="xs:int"/>
+            <xs:element name="totalSaaS" type="xs:int"/>
+            <xs:element name="totalFaaS" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+      <!-- Fault de negocio propio (Paso 4, decisión #8) -->
+      <xs:element name="LibreriaFaultDetail">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="codigo" type="xs:string"/>
+            <xs:element name="descripcion" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+    </xs:schema>
+  </wsdl:types>
+
+  <!-- ===================================================================
+       MENSAJES
+       =================================================================== -->
+  <wsdl:message name="ObtenerConceptosPendientesInput">
+    <wsdl:part name="parameters" element="tns:ObtenerConceptosPendientesRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ObtenerConceptosPendientesOutput">
+    <wsdl:part name="parameters" element="tns:ObtenerConceptosPendientesResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="RegistrarClasificacionInput">
+    <wsdl:part name="parameters" element="tns:RegistrarClasificacionRequest"/>
+  </wsdl:message>
+  <wsdl:message name="RegistrarClasificacionOutput">
+    <wsdl:part name="parameters" element="tns:RegistrarClasificacionResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="ObtenerProgresoUsuarioInput">
+    <wsdl:part name="parameters" element="tns:ObtenerProgresoUsuarioRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ObtenerProgresoUsuarioOutput">
+    <wsdl:part name="parameters" element="tns:ObtenerProgresoUsuarioResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="RegistrarClasificadorInput">
+    <wsdl:part name="parameters" element="tns:RegistrarClasificadorRequest"/>
+  </wsdl:message>
+  <wsdl:message name="RegistrarClasificadorOutput">
+    <wsdl:part name="parameters" element="tns:RegistrarClasificadorResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="LibreriaFault">
+    <wsdl:part name="fault" element="tns:LibreriaFaultDetail"/>
+  </wsdl:message>
+
+  <wsdl:message name="ObtenerEstadisticasPorModeloInput">
+    <wsdl:part name="parameters" element="tns:ObtenerEstadisticasPorModeloRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ObtenerEstadisticasPorModeloOutput">
+    <wsdl:part name="parameters" element="tns:ObtenerEstadisticasPorModeloResponse"/>
+  </wsdl:message>
+
+  <!-- ===================================================================
+       PORT TYPE / INTERFACE
+       =================================================================== -->
+  <wsdl:portType name="LibraryClassifierPortType">
+
+    <wsdl:operation name="ObtenerConceptosPendientes">
+      <wsdl:documentation>
+        Conceptos del catálogo real (libro_concepto) que aún no tienen una
+        clasificación Cloud en clasificaciones_cloud, con isbn, título y
+        categoría del libro — lo mínimo para que el cliente identifique
+        qué está clasificando, sin exponer precio/stock/formato/fechas.
+        isbn es opcional: si se omite, devuelve pendientes de todo el catálogo.
+      </wsdl:documentation>
+      <wsdl:input message="tns:ObtenerConceptosPendientesInput"/>
+      <wsdl:output message="tns:ObtenerConceptosPendientesOutput"/>
+      <wsdl:fault name="LibreriaFault" message="tns:LibreriaFault"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="RegistrarClasificacion">
+      <wsdl:documentation>
+        Recibe clasificador, concepto (isbn+idConcepto) y modelo de
+        servicio Cloud; valida contra el catálogo real y registra la
+        clasificación. Falla con CLASIFICACION_DUPLICADA si ese
+        clasificador ya clasificó ese concepto de ese libro,
+        ISBN_NO_ENCONTRADO / CONCEPTO_NO_ENCONTRADO si no existen en el
+        catálogo, o CLASIFICADOR_NO_ENCONTRADO si idClasificador no existe.
+      </wsdl:documentation>
+      <wsdl:input message="tns:RegistrarClasificacionInput"/>
+      <wsdl:output message="tns:RegistrarClasificacionOutput"/>
+      <wsdl:fault name="LibreriaFault" message="tns:LibreriaFault"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="ObtenerProgresoUsuario">
+      <wsdl:documentation>
+        Totales clasificados y pendientes asociados a un clasificador
+        ("usuario" del módulo SOAP, no la tabla usuarios del monolito).
+        Falla con CLASIFICADOR_NO_ENCONTRADO si el id no existe.
+      </wsdl:documentation>
+      <wsdl:input message="tns:ObtenerProgresoUsuarioInput"/>
+      <wsdl:output message="tns:ObtenerProgresoUsuarioOutput"/>
+      <wsdl:fault name="LibreriaFault" message="tns:LibreriaFault"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="RegistrarClasificador">
+      <wsdl:documentation>
+        Alta de un clasificador (nombre + apellido, correo opcional) en
+        la tabla clasificadores. Operación adicional al mínimo del Paso 9,
+        requerida por el scope del Paso 2. Nunca toca usuarios del monolito.
+      </wsdl:documentation>
+      <wsdl:input message="tns:RegistrarClasificadorInput"/>
+      <wsdl:output message="tns:RegistrarClasificadorOutput"/>
+      <wsdl:fault name="LibreriaFault" message="tns:LibreriaFault"/>
+    </wsdl:operation>
+
+    <wsdl:operation name="ObtenerEstadisticasPorModelo">
+      <wsdl:documentation>
+        Tarea 1: conteo de clasificaciones por modelo Cloud. REQUIERE
+        WS-Security en soap:Header: &lt;wsse:Security&gt;
+        &lt;wsse:UsernameToken&gt;&lt;wsse:Username&gt;...&lt;/wsse:Username&gt;
+        &lt;wsse:Password&gt;...&lt;/wsse:Password&gt;&lt;/wsse:UsernameToken&gt;
+        &lt;/wsse:Security&gt; (namespace wsse = "http://docs.oasis-open.org/
+        wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"). Falla con
+        CREDENCIALES_INVALIDAS (HTTP 401) si faltan o no coinciden.
+      </wsdl:documentation>
+      <wsdl:input message="tns:ObtenerEstadisticasPorModeloInput"/>
+      <wsdl:output message="tns:ObtenerEstadisticasPorModeloOutput"/>
+      <wsdl:fault name="LibreriaFault" message="tns:LibreriaFault"/>
+    </wsdl:operation>
+
+  </wsdl:portType>
+
+  <!-- ===================================================================
+       BINDING — document/literal, sobres armados a mano (decisión #6)
+       =================================================================== -->
+  <wsdl:binding name="LibraryClassifierBinding" type="tns:LibraryClassifierPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <wsdl:operation name="ObtenerConceptosPendientes">
+      <soap:operation soapAction="urn:udem:iac:libreria:soap#ObtenerConceptosPendientes"/>
+      <wsdl:input><soap:body use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+      <wsdl:fault name="LibreriaFault"><soap:fault name="LibreriaFault" use="literal"/></wsdl:fault>
+    </wsdl:operation>
+
+    <wsdl:operation name="RegistrarClasificacion">
+      <soap:operation soapAction="urn:udem:iac:libreria:soap#RegistrarClasificacion"/>
+      <wsdl:input><soap:body use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+      <wsdl:fault name="LibreriaFault"><soap:fault name="LibreriaFault" use="literal"/></wsdl:fault>
+    </wsdl:operation>
+
+    <wsdl:operation name="ObtenerProgresoUsuario">
+      <soap:operation soapAction="urn:udem:iac:libreria:soap#ObtenerProgresoUsuario"/>
+      <wsdl:input><soap:body use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+      <wsdl:fault name="LibreriaFault"><soap:fault name="LibreriaFault" use="literal"/></wsdl:fault>
+    </wsdl:operation>
+
+    <wsdl:operation name="RegistrarClasificador">
+      <soap:operation soapAction="urn:udem:iac:libreria:soap#RegistrarClasificador"/>
+      <wsdl:input><soap:body use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+      <wsdl:fault name="LibreriaFault"><soap:fault name="LibreriaFault" use="literal"/></wsdl:fault>
+    </wsdl:operation>
+
+    <wsdl:operation name="ObtenerEstadisticasPorModelo">
+      <soap:operation soapAction="urn:udem:iac:libreria:soap#ObtenerEstadisticasPorModelo"/>
+      <wsdl:input><soap:body use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+      <wsdl:fault name="LibreriaFault"><soap:fault name="LibreriaFault" use="literal"/></wsdl:fault>
+    </wsdl:operation>
+
+  </wsdl:binding>
+
+  <!-- ===================================================================
+       SERVICE / ENDPOINT — ajustar la dirección real al desplegar en la VM
+       =================================================================== -->
+  <wsdl:service name="LibraryClassifierService">
+    <wsdl:port name="LibraryClassifierPort" binding="tns:LibraryClassifierBinding">
+      <soap:address location="http://localhost:5050/soap"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clasificador Cloud - Librería en Línea</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="contenedor">
+    <h1>Clasificador de modelos Cloud</h1>
+    <p class="subtitulo">
+      Escribe una palabra, frase o descripción relacionada con libros de Cloud
+      Computing y te diremos si corresponde principalmente a IaaS, PaaS, FaaS o SaaS.
+    </p>
+
+    <form id="formulario">
+      <div class="fila">
+        <label>
+          Nombre
+          <input type="text" id="nombre" required />
+        </label>
+        <label>
+          Apellido
+          <input type="text" id="apellido" required />
+        </label>
+      </div>
+
+      <label>
+        Texto a analizar
+        <textarea id="texto" rows="5" required
+          placeholder="Ej. Necesito ejecutar código en respuesta a eventos sin administrar servidores..."></textarea>
+      </label>
+
+      <button type="submit">Analizar (microservicio REST/XML)</button>
+    </form>
+
+    <section id="resultado" class="resultado" hidden>
+      <h2 id="saludo"></h2>
+      <p class="categoria">
+        Modelo detectado: <strong id="categoriaDetectada"></strong>
+      </p>
+      <p id="avisoEmpate" class="aviso" hidden>
+        El texto tiene coincidencias iguales con más de un modelo; se muestra el primero.
+      </p>
+
+      <h3>Detalle de coincidencias por modelo</h3>
+      <ul id="listaPuntajes"></ul>
+
+      <h3>Libros de Cloud Computing en el catálogo</h3>
+      <p id="avisoCatalogo" class="aviso" hidden></p>
+      <ul id="listaLibros"></ul>
+    </section>
+
+    <hr />
+
+    <!-- ═══════════════ Modo cliente SOAP (Ejercicio04, Paso 14) ═══════════════ -->
+    <h1>Modo cliente SOAP</h1>
+    <p class="subtitulo">
+      Habla directamente con el módulo SOAP (<code>library_soap_service</code>),
+      nunca con PostgreSQL. Registra primero un clasificador para obtener tu
+      <code>idClasificador</code>; las demás operaciones lo usan.
+    </p>
+
+    <form id="formSoapClasificador">
+      <div class="fila">
+        <label>Nombre <input type="text" id="soapNombre" required /></label>
+        <label>Apellido <input type="text" id="soapApellido" required /></label>
+      </div>
+      <label>Correo (opcional) <input type="email" id="soapCorreo" /></label>
+      <button type="submit">Registrarme como clasificador</button>
+      <p id="soapClasificadorEstado" class="aviso" hidden></p>
+    </form>
+
+    <section id="soapAcciones" hidden>
+      <h3>Mi id de clasificador: <strong id="soapIdClasificadorTexto"></strong></h3>
+
+      <button id="btnPendientes" type="button">Ver conceptos pendientes</button>
+      <ul id="soapListaPendientes"></ul>
+
+      <form id="formSoapClasificar">
+        <h3>Registrar una clasificación</h3>
+        <div class="fila">
+          <label>ISBN <input type="text" id="soapIsbn" required /></label>
+          <label>id de concepto <input type="number" id="soapIdConcepto" required /></label>
+        </div>
+        <label>
+          Modelo Cloud
+          <select id="soapModelo" required>
+            <option value="IaaS">IaaS</option>
+            <option value="PaaS">PaaS</option>
+            <option value="SaaS">SaaS</option>
+            <option value="FaaS">FaaS</option>
+          </select>
+        </label>
+        <button type="submit">Registrar clasificación</button>
+      </form>
+
+      <button id="btnProgreso" type="button">Ver mi progreso</button>
+      <p id="soapProgresoTexto"></p>
+    </section>
+
+    <!-- Mensajes de SOAP Fault: SIEMPRE en español, sin XML ni stack traces (Tarea 2) -->
+    <p id="soapMensaje" class="aviso" hidden></p>
+
+    <hr />
+
+    <!-- ═══════════ Tarea 1: estadísticas protegidas con WS-Security ═══════════ -->
+    <h2>Estadísticas por modelo (requiere credenciales)</h2>
+    <form id="formEstadisticas">
+      <div class="fila">
+        <label>Usuario <input type="text" id="wsUsuario" required /></label>
+        <label>Contraseña <input type="password" id="wsPassword" required /></label>
+      </div>
+      <button type="submit">Consultar estadísticas</button>
+    </form>
+    <ul id="listaEstadisticas"></ul>
+  </main>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
