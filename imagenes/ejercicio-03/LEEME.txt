@@ -1,6 +1,10 @@
-Capturas pendientes del Ejercicio guiado 3 (modulo SOAP).
+Capturas de la galeria del Ejercicio guiado 3 (modulo SOAP).
 Guarda cada PNG en esta carpeta con EXACTAMENTE el nombre indicado;
-la galeria de ejercicios/ejercicio-03.html las mostrara automaticamente.
+la galeria de ejercicios/ejercicio-03.html lo muestra en su recuadro.
+
+El script apps/services/library_soap_service/evidencia/capturas/tomar_capturas.sh
+(tambien en descargables/ejercicio-03/) reproduce la salida de los pasos 1-6
+con banners para capturar cada pantalla en la VM.
 
   - paso1-archivos-en-vm.png
   - paso2-pip-install.png

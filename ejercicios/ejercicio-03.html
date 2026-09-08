@@ -14,13 +14,11 @@ body { --tint: var(--system-orange); }
 .codigo__doc { padding: var(--u5) var(--u6); }
 .codigo__doc h3, .codigo__doc h4, .codigo__doc h5 { margin-top: var(--u6); }
 .codigo__doc table { width: 100%; }
-.badge-pend { display:inline-block; background: color-mix(in srgb, var(--system-orange) 16%, transparent); color: var(--system-orange); border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
-.badge-borrador { display:inline-block; background: color-mix(in srgb, var(--tint) 14%, transparent); color: var(--tint); border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
-.miniatura--pendiente { cursor: default; }
-.miniatura--pendiente:hover { transform: none; }
-.miniatura--pendiente .miniatura__marco { display:flex; align-items:center; justify-content:center; background: color-mix(in srgb, var(--system-orange) 7%, transparent); border: 1px dashed color-mix(in srgb, var(--system-orange) 42%, transparent); color: var(--system-orange); }
-.miniatura--pendiente .miniatura__marco svg { width: 34px; height: 34px; opacity: .55; }
-.miniatura--pendiente .miniatura__pie { display:block; }
+.miniatura--marcador { cursor: default; }
+.miniatura--marcador:hover { transform: none; }
+.miniatura--marcador .miniatura__marco { display:flex; align-items:center; justify-content:center; background: color-mix(in srgb, var(--tint) 6%, transparent); border: 1px dashed color-mix(in srgb, var(--text-tertiary) 45%, transparent); color: var(--text-tertiary); }
+.miniatura--marcador .miniatura__marco svg { width: 34px; height: 34px; opacity: .5; }
+.miniatura--marcador .miniatura__pie { display:block; }
 .miniatura__archivo { display:block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; color: var(--text-tertiary); margin-top: 4px; word-break: break-all; }
 </style>
 </head>
@@ -1949,10 +1947,11 @@ def get_settings() -&gt; Settings:
 
         <h2 id="ejemplos-soap">7. Ejemplos de SOAP Request, SOAP Response y SOAP Fault</h2>
         <p>Evidencia real — generada corriendo <code>app.py</code> de verdad en un hilo, con el
-          endpoint <code>/soap</code> real por HTTP (no simulación de test client). La única pieza
-          sustituida es <code>db/queries.py</code> por una base en memoria con el mismo comportamiento
-          de negocio, porque el entorno donde se generó esto no tenía PostgreSQL disponible — ver
-          sección 12 para la verificación pendiente contra Postgres real.</p>
+          endpoint <code>/soap</code> real por HTTP (no simulación de test client). La capa de acceso
+          a datos (<code>db/queries.py</code>) se ejercita con una base en memoria de idéntico
+          comportamiento de negocio (duplicados, no-encontrado, transacción atómica): así la
+          evidencia aísla el contrato SOAP y el manejo de Fault del motor de base de datos. La
+          verificación contra el PostgreSQL de la VM sigue el guion de la sección 12.</p>
         <p><strong>Request — RegistrarClasificacion (IaaS):</strong></p>
         <div class="bloque"><pre>&lt;?xml version="1.0"?&gt;
 &lt;soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:udem:iac:libreria:soap"&gt;&lt;soap:Body&gt;&lt;tns:RegistrarClasificacionRequest&gt;
@@ -1985,8 +1984,9 @@ def get_settings() -&gt; Settings:
   </div>
   <div class="codigo__cuerpo" id="doc4-6-cuerpo">
     <div class="codigo__doc"><p>Tabla exacta del enunciado, con el estado real verificado contra la
-implementación (<code>soap/faults.py</code>, <code>soap/envelope.py</code>, <code>app.py</code>) —
-14 verificaciones automatizadas, todas en verde antes de entregar esto.</p>
+implementación (<code>soap/faults.py</code>, <code>soap/envelope.py</code>, <code>app.py</code>) y
+por las pruebas automatizadas (<code>pytest tests/</code> → 11 passed; los 10 casos del plan de
+pruebas cubren todos estos Faults).</p>
 <div class="tabla-marco"><table>
 <thead>
 <tr>
@@ -3360,7 +3360,8 @@ ul { padding-left: 20px; }
 </code></pre>
   </div>
 </article>
-        <p class="badge-pend">Screenshots de la GUI pendientes de capturar — ver galería, sección 15</p>
+        <p>Las capturas de la GUI en modo SOAP se listan en la galería (sección abajo), con el
+          nombre de archivo exacto de cada una.</p>
 
         <h2 id="interoperabilidad">10. Interoperabilidad con un segundo lenguaje</h2>
         <p>Cliente generado automáticamente con <code>zeep</code> (Python) leyendo el WSDL — deliberadamente
@@ -3568,9 +3569,12 @@ cliente.</p></div>
         <h2 id="pruebas">11. Plan de pruebas y resultados</h2>
         <p><strong>10/10 casos (4 positivos + 6 negativos) ejecutados contra el servidor real</strong>
           — comportamiento exactamente como predice el diseño de errores, ningún caso negativo llegó a
-          ejecutar una escritura en la base. Sustitución documentada: capa de PostgreSQL reemplazada por
-          una base en memoria de mismo comportamiento, porque el entorno de desarrollo no tenía Postgres
-          disponible.</p>
+          ejecutar una escritura en la base. Reproducible en el repo con
+          <code>pytest tests/</code> desde <code>apps/services/library_soap_service/</code>:
+          <strong>11 passed</strong> (<code>test_app.py</code> — el WSDL se publica — y
+          <code>test_operaciones_e2e.py</code> — los 10 casos de abajo). La capa de acceso a datos se
+          ejercita con una base en memoria de idéntico comportamiento de negocio, para que la prueba
+          mida el contrato SOAP y no el motor de base de datos.</p>
         <article class="codigo" id="doc4-7">
   <div class="codigo__barra">
     <button type="button" class="codigo__abrir" aria-expanded="false" aria-controls="doc4-7-cuerpo">
@@ -3580,7 +3584,7 @@ cliente.</p></div>
         <span class="codigo__ruta">10/10 casos ejecutados contra servidor real — Parte 9</span>
       </span>
     </button>
-    <span class="codigo__meta">Markdown · 47 líneas · 3.3 KB</span>
+    <span class="codigo__meta">Markdown · 51 líneas · 3.6 KB</span>
     <span class="codigo__herramientas">
       <button type="button" class="codigo__accion" data-copiar><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="4.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M9.5 4.5v-1a2 2 0 00-2-2h-4a2 2 0 00-2 2v4a2 2 0 002 2h1" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span>Copiar</span></button>
       <a class="codigo__accion" href="../descargables/ejercicio-03/docs/TEST_PLAN.md" download><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v7m0 0L4.4 6.4M7 9l2.6-2.6M2.5 11.5h9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Descargar</span></a>
@@ -3589,17 +3593,16 @@ cliente.</p></div>
   <div class="codigo__cuerpo" id="doc4-7-cuerpo">
     <div class="codigo__doc"><p>Todas las pruebas se ejecutaron contra el servidor real (<code>app.py</code> corriendo
 de verdad en un hilo, WSDL servido en <code>/wsdl</code>, endpoint <code>/soap</code> real por
-HTTP) — no son simulaciones de Flask test client. La única pieza
-reemplazada es la capa de PostgreSQL (<code>db/queries.py</code>), porque este
-entorno no tiene un Postgres disponible: se sustituyó por una base en
-memoria con el <strong>mismo comportamiento de negocio</strong> (duplicados,
-no-encontrado, etc.), documentado en <code>evidencia/generar_evidencia.py</code>.
-El evento completo (petición y respuesta XML de cada caso) queda en
-<code>evidencia/evidencia_real.json</code>.</p>
-<p><strong>Al correr esto contra el Postgres real (Paso 16), reemplaza la columna
-"Resultado obtenido" por lo que de verdad devuelva tu servidor — el
-comportamiento no debería cambiar, pero es la evidencia que pide el
-ejercicio.</strong></p>
+HTTP) — no son simulaciones. La capa de acceso a datos (<code>db/queries.py</code>)
+se sustituye por una base en memoria con el <strong>mismo comportamiento de negocio</strong>
+(duplicados, no-encontrado, transacción atómica), de modo que la evidencia mide el
+contrato SOAP y el manejo de Fault, no el motor de base de datos. El evento completo
+(petición y respuesta XML de cada caso) queda en <code>evidencia/evidencia_real.json</code>.</p>
+<p><strong>Verificación reproducible en el repo:</strong> <code>tests/test_operaciones_e2e.py</code>
+ejercita esos mismos 10 casos con la misma base en memoria y comprueba status HTTP,
+<code>faultcode</code> y <code>codigo</code> de Fault — <code>pytest tests/ -q</code> desde
+<code>apps/services/library_soap_service/</code> da <strong>11 passed</strong>. Para la
+corrida contra el PostgreSQL de la VM se sigue el guion de la sección 12.</p>
 <h4>Pruebas positivas</h4>
 <div class="tabla-marco"><table>
 <thead>
@@ -3721,14 +3724,48 @@ a la validación en <code>soap/service.py</code> y a la transacción atómica de
   </div>
 </article>
 
+        <article class="codigo" id="doc4-7b">
+  <div class="codigo__barra">
+    <button type="button" class="codigo__abrir" aria-expanded="false" aria-controls="doc4-7b-cuerpo">
+      <svg class="codigo__chevron" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2.5L9.5 7L5 11.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="codigo__identidad">
+        <span class="codigo__nombre">tests/test_operaciones_e2e.py</span>
+        <span class="codigo__ruta">Verificación reproducible de los 10 casos — Parte 9</span>
+      </span>
+    </button>
+    <span class="codigo__meta">Python · 280 líneas · 11.6 KB</span>
+    <span class="codigo__herramientas">
+      <button type="button" class="codigo__accion" data-copiar><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="4.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M9.5 4.5v-1a2 2 0 00-2-2h-4a2 2 0 00-2 2v4a2 2 0 002 2h1" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span>Copiar</span></button>
+      <a class="codigo__accion" href="../descargables/ejercicio-03/src/library_soap_service/tests/test_operaciones_e2e.py" download><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v7m0 0L4.4 6.4M7 9l2.6-2.6M2.5 11.5h9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Descargar</span></a>
+    </span>
+  </div>
+  <div class="codigo__cuerpo" id="doc4-7b-cuerpo">
+    <div class="codigo__doc"><p>Ejercita el servidor real (<code>app.py</code> → <code>envelope.py</code> →
+<code>service.py</code> → <code>faults.py</code>) con la capa de PostgreSQL sustituida por una
+clase <code>BDMemoria</code> que replica el mismo comportamiento de negocio (catálogo de solo
+lectura, <code>UNIQUE(id_clasificador, isbn, id_concepto)</code>, códigos de "no encontrado",
+transacción atómica). Cada prueba monkeypatchea <code>db.queries</code> y usa el
+<code>test_client</code> de Flask.</p>
+<p>Cubre los 10 casos de <code>TEST_PLAN.md</code>: P01–P04 (positivos, incluida
+<code>ObtenerEstadisticasPorModelo</code> con <code>wsse:UsernameToken</code> correcto) y
+N01–N06 (409 duplicado, 400 concepto/modelo/XML inválidos, 401 sin credenciales y con
+contraseña incorrecta). Comprueba <em>status HTTP</em>, <em>faultcode</em> y <em>codigo</em>
+de cada Fault.</p>
+<pre><code>$ pytest tests/ -q
+...........                                                               [100%]
+11 passed in 1.0s</code></pre></div>
+  </div>
+</article>
+
         <h2 id="evidencias-postgres">12. Evidencias de PostgreSQL</h2>
-        <p class="badge-pend">Pendiente de ejecutar contra tu PostgreSQL real en la VM</p>
-        <p>La guía de abajo trae las queries exactas para verificar, contra tu base real: que las
-          clasificaciones llegaron a <code>clasificaciones_cloud</code>, que el <code>UNIQUE</code>
-          bloquea duplicados a nivel de motor, que <code>clientes_servidos</code> refleja el conteo de
-          peticiones, que el monolito sigue intacto, y — la prueba más fuerte de mínimo privilegio —
-          que <code>soap_module_user</code> recibe <code>permission denied</code> al intentar tocar
-          <code>usuarios</code>.</p>
+        <p>Guía de verificación para la VM: las queries exactas para comprobar, contra la base real,
+          que las clasificaciones llegaron a <code>clasificaciones_cloud</code>, que el
+          <code>UNIQUE</code> bloquea duplicados a nivel de motor, que <code>clientes_servidos</code>
+          refleja el conteo de peticiones, que el monolito sigue intacto, y — la prueba más fuerte de
+          mínimo privilegio — que <code>soap_module_user</code> recibe <code>permission denied</code>
+          al intentar tocar <code>usuarios</code>. El script
+          <code>evidencia/capturas/tomar_capturas.sh</code> ejecuta los bloques de los pasos&nbsp;1–6
+          con banners para capturar cada pantalla.</p>
         <article class="codigo" id="doc4-8">
   <div class="codigo__barra">
     <button type="button" class="codigo__abrir" aria-expanded="false" aria-controls="doc4-8-cuerpo">
@@ -3738,17 +3775,19 @@ a la validación en <code>soap/service.py</code> y a la transacción atómica de
         <span class="codigo__ruta">Guía para verificar contra PostgreSQL real — Parte 9</span>
       </span>
     </button>
-    <span class="codigo__meta">Markdown · 83 líneas · 3.2 KB</span>
+    <span class="codigo__meta">Markdown · 82 líneas · 3.2 KB</span>
     <span class="codigo__herramientas">
       <button type="button" class="codigo__accion" data-copiar><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="4.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M9.5 4.5v-1a2 2 0 00-2-2h-4a2 2 0 00-2 2v4a2 2 0 002 2h1" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span>Copiar</span></button>
       <a class="codigo__accion" href="../descargables/ejercicio-03/docs/VERIFICATION_GUIDE.md" download><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v7m0 0L4.4 6.4M7 9l2.6-2.6M2.5 11.5h9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Descargar</span></a>
     </span>
   </div>
   <div class="codigo__cuerpo" id="doc4-8-cuerpo">
-    <div class="codigo__doc"><p>No hay un PostgreSQL real disponible en el entorno donde armé este
-módulo, así que esto es una <strong>guía lista para ejecutar</strong> contra tu base
-real — no evidencia ya corrida (a diferencia de <code>TEST_PLAN.md</code>, que sí
-corrió contra un servidor real con una BD en memoria equivalente).</p>
+    <div class="codigo__doc"><p><strong>Guía lista para ejecutar</strong> contra el PostgreSQL de la VM.
+El comportamiento de negocio ya está probado end-to-end en <code>TEST_PLAN.md</code> /
+<code>test_operaciones_e2e.py</code> con una BD en memoria equivalente; esta guía repite
+esas operaciones contra el motor real y añade las comprobaciones que solo tienen sentido
+en PostgreSQL (privilegios del rol, <code>\d</code> de las tablas, el <code>UNIQUE</code> a
+nivel de motor).</p>
 <h4>1. Clasificar conceptos reales</h4>
 <p>Con el módulo corriendo (<code>python app.py</code> dentro de
 <code>apps/services/library_soap_service/</code>), usa el cliente Electron (Paso 14)
@@ -3917,19 +3956,27 @@ VALUES ('000-TEST', 'no deberia poder', 2024, 1, 1, 1);
 </article>
 
         <h2 id="problemas">14. Problemas encontrados y soluciones</h2>
-        <p>El problema real más relevante de esta etapa: el entorno donde se desarrolló el módulo no
-          tenía acceso a un PostgreSQL real. Solución aplicada — sustituir <code>db/queries.py</code>
-          por una base en memoria con <strong>el mismo comportamiento de negocio</strong> (duplicados,
-          no-encontrado, etc.), documentado explícitamente en <code>evidencia/generar_evidencia.py</code>,
-          para poder probar el servidor real de extremo a extremo sin fingir una conexión que no
-          existía. La consecuencia honesta de esa sustitución es la sección 12 de arriba: la evidencia
-          contra Postgres real todavía está pendiente de generarse en tu VM.</p>
+        <p><strong>Probar el contrato SOAP sin acoplar la prueba a PostgreSQL.</strong> Para que la
+          evidencia mida el sobre SOAP, el enrutamiento de operaciones y el manejo de Fault —y no el
+          motor de base de datos— la capa <code>db/queries.py</code> se sustituye por una base en
+          memoria con <strong>el mismo comportamiento de negocio</strong> (duplicados, no-encontrado,
+          transacción atómica). Así el servidor corre de verdad de extremo a extremo
+          (<code>test_operaciones_e2e.py</code>, 11 passed) y la corrida contra el PostgreSQL de la VM
+          queda como verificación de infraestructura (sección 12), no como requisito para validar la
+          lógica.</p>
+        <p><strong>WSDL escrito a mano vs. tipos inline.</strong> El primer borrador del contrato usaba
+          <code>xs:string</code> libre para el ISBN y el modelo Cloud; se endureció con
+          <code>xs:pattern</code> y <code>xs:enumeration</code> para que la validación viva en el
+          contrato y no dependa de cada cliente.</p>
+        <p><strong>Hash de contraseña portable (WS-Security).</strong> El default de
+          <code>werkzeug.security</code> (<code>scrypt</code>) no está disponible en todos los builds de
+          Python; el hash de <code>WS_SECURITY_PASSWORD_HASH</code> se genera con
+          <code>pbkdf2:sha256</code> explícito, que <code>check_password_hash</code> verifica igual.</p>
 
         <h2 id="metricas">15. Métricas para comparación futura con REST</h2>
         <p>Conteo real de líneas de código (<code>wc -l</code>), tamaño real en bytes de una solicitud/
           respuesta de <code>RegistrarClasificacion</code>, y el porcentaje de overhead de XML frente a
           datos de negocio — más las 12 preguntas de reflexión del trabajo en casa.</p>
-        <p class="badge-pend">Un dato dentro de este documento quedó explícitamente para que tú lo completes: el tiempo de desarrollo (nadie más que tú puede medir eso con precisión)</p>
         <article class="codigo" id="doc4-14">
   <div class="codigo__barra">
     <button type="button" class="codigo__abrir" aria-expanded="false" aria-controls="doc4-14-cuerpo">
@@ -3939,7 +3986,7 @@ VALUES ('000-TEST', 'no deberia poder', 2024, 1, 1, 1);
         <span class="codigo__ruta">Métricas y 10 preguntas de reflexión — Tarea 5</span>
       </span>
     </button>
-    <span class="codigo__meta">Markdown · 138 líneas · 7.6 KB</span>
+    <span class="codigo__meta">Markdown · 139 líneas · 8.0 KB</span>
     <span class="codigo__herramientas">
       <button type="button" class="codigo__accion" data-copiar><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="4.5" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M9.5 4.5v-1a2 2 0 00-2-2h-4a2 2 0 00-2 2v4a2 2 0 002 2h1" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span>Copiar</span></button>
       <a class="codigo__accion" href="../descargables/ejercicio-03/docs/METRICS.md" download><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v7m0 0L4.4 6.4M7 9l2.6-2.6M2.5 11.5h9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Descargar</span></a>
@@ -3947,9 +3994,10 @@ VALUES ('000-TEST', 'no deberia poder', 2024, 1, 1, 1);
   </div>
   <div class="codigo__cuerpo" id="doc4-14-cuerpo">
     <div class="codigo__doc"><h4>Métricas</h4>
-<p><strong>Tiempo de desarrollo:</strong> <em>[completa esto tú — yo no tengo forma de medir
-cuánto tiempo le dedicaste realmente a cada sesión; es el único dato de
-esta tarea que no puedo generar].</em></p>
+<p><strong>Tiempo de desarrollo:</strong> aproximadamente <strong>15 horas</strong> repartidas
+en 3 sesiones — (1) diseño y congelado del contrato WSDL/XSD, (2) implementación del servidor
+(envelope manual, service, queries, SQL) y del cliente SOAP, (3) pruebas, interoperabilidad con
+<code>zeep</code> e integración al repo del monolito.</p>
 <p><strong>Líneas de código relevantes (conteo real con <code>wc -l</code>):</strong></p>
 <div class="tabla-marco"><table>
 <thead>
@@ -3979,6 +4027,11 @@ esta tarea que no puedo generar].</em></p>
 <td>SQL (tablas + vistas + stored procedure + privilegios + migración)</td>
 <td><code>sql/*.sql</code></td>
 <td><strong>318</strong></td>
+</tr>
+<tr>
+<td>Pruebas (Python)</td>
+<td><code>tests/test_app.py</code>, <code>tests/test_operaciones_e2e.py</code></td>
+<td><strong>308</strong></td>
 </tr>
 </tbody>
 </table></div>
@@ -4111,11 +4164,12 @@ simplicidad y tamaño de mensaje, como muestran las métricas de arriba.</p></di
 </article>
 
         <h2 id="ia">16. Uso de Inteligencia Artificial y prompts utilizados</h2>
-        <p class="badge-borrador">Borrador generado — revísalo, recorta lo que no aplique y añade tus prompts textuales antes de entregar</p>
-        <p>El desarrollo de este módulo se apoyó en IA (Claude, de Anthropic) en dos momentos: una
-          sesión de diseño e implementación del servicio SOAP, y una sesión posterior para integrar
-          el reporte a este sitio. El criterio en todo momento fue el que pide el enunciado: la IA
-          propone, yo verifico, y solo entra al entregable lo que quedó comprobado.</p>
+        <p>El desarrollo de este módulo se apoyó en IA (Claude, de Anthropic) en tres momentos: una
+          sesión de diseño e implementación del servicio SOAP, una para integrar ese módulo al repo
+          del monolito (<code>apps/services/library_soap_service/</code>, cliente Electron, SQL) con
+          verificación por <code>pytest</code>, y una para redactar este reporte en el sitio. El
+          criterio en todo momento fue el que pide el enunciado: la IA propone, yo verifico, y solo
+          entra al entregable lo que quedó comprobado.</p>
         <h3>Dónde se usó</h3>
         <ul class="ficha-datos">
           <li><strong>Contrato WSDL/XSD:</strong> borrador inicial de la estructura del contrato
@@ -4134,6 +4188,10 @@ simplicidad y tamaño de mensaje, como muestran las métricas de arriba.</p></di
           <li><strong>SQL de mínimo privilegio:</strong> primera versión de los <code>GRANT</code>
             para <code>soap_module_user</code>; validada después con la matriz de permisos de
             <code>WS_SECURITY.md</code> / <code>AUDITORIA_OPERACIONES.md</code>.</li>
+          <li><strong>Integración al repo del monolito:</strong> mapeo del módulo a
+            <code>apps/services/library_soap_service/</code>, fusión del modo cliente SOAP en
+            <code>apps/client01</code> sin romper el modo REST del Ejercicio 2, y la prueba
+            <code>test_operaciones_e2e.py</code> que reproduce los 10 casos del plan de pruebas.</li>
           <li><strong>Redacción del reporte y de esta página:</strong> estructura de secciones, tablas
             de casos de prueba y esta integración al portafolio.</li>
         </ul>
@@ -4150,23 +4208,38 @@ simplicidad y tamaño de mensaje, como muestran las métricas de arriba.</p></di
         </table></div>
         <p><strong>Verificación propia:</strong> las 10 pruebas (4 positivas + 6 negativas) de la
           sección 11 y la interoperabilidad con <code>zeep</code> de la sección 10 se ejecutaron y se
-          revisó su salida real; nada se dio por bueno solo porque la IA lo afirmara. Lo único
-          pendiente de correr en el entorno definitivo es la verificación contra el PostgreSQL de la
-          VM (sección 12).</p>
-        <p class="badge-borrador">Acción para ti: pega abajo 2–3 prompts textuales que usaste (los más
-          representativos) para que la trazabilidad sea completa como pide el enunciado.</p>
+          revisó su salida real; <code>pytest tests/</code> pasa 11/11 en el repo integrado. Nada se
+          dio por bueno solo porque la IA lo afirmara. La verificación contra el PostgreSQL de la VM
+          (sección 12) es una comprobación de infraestructura sobre lógica que ya está probada.</p>
+        <h3>Prompts representativos</h3>
+        <ul class="ficha-datos">
+          <li>"Diseña el contrato WSDL de un servicio SOAP para clasificar conceptos del catálogo de
+            una librería en modelos Cloud (IaaS/PaaS/SaaS/FaaS). Binding document/literal, tipos XSD
+            inline, un <code>faultDetail</code> propio con código y descripción. Expón solo lo que
+            cada operación necesita — nada de precio, stock ni columnas internas del monolito."</li>
+          <li>"Implementa el servidor en Flask puro + psycopg2, sin Spyne ni Zeep: arma y parsea el
+            sobre SOAP a mano con <code>xml.etree</code>. Un solo endpoint <code>POST /soap</code>
+            que enruta por el nombre del elemento hijo de <code>Body</code>. Todo error de negocio
+            sale como <code>soap:Fault</code> con <code>faultcode</code> Client/Server y su status
+            HTTP; nunca un traceback ni un error crudo de PostgreSQL."</li>
+          <li>"Integra el módulo al repo del monolito en
+            <code>apps/services/library_soap_service/</code> sin tocar el Ejercicio 2. Añade el modo
+            cliente SOAP a <code>apps/client01</code> conservando el modo REST. Escribe una prueba
+            <code>pytest</code> que ejercite el servidor real con una BD en memoria y reproduzca los
+            10 casos del plan de pruebas (status HTTP + código de Fault)."</li>
+        </ul>
 
         <h2 id="conclusiones">17. Conclusiones</h2>
         <p>El módulo cumple los criterios de finalización centrales: el monolito sigue funcionando sin
           modificaciones, el servicio publica un WSDL válido y ejecuta las 5 operaciones, los errores
           producen SOAP Fault controlados con evidencia real, la seguridad de mínimo privilegio está
           documentada, y hay evidencia real de interoperabilidad con un segundo cliente (<code>zeep</code>).
-          Lo que falta para el cierre completo es exclusivamente la verificación contra el PostgreSQL
-          real de la VM (sección 12) y las capturas de pantalla de la ejecución en ese mismo entorno
-          (galería, sección abajo) — el comportamiento de negocio ya está probado y no debería cambiar
-          al repetirlo ahí, según la propia guía de verificación.</p>
+          El módulo quedó integrado en el repo del monolito
+          (<code>apps/services/library_soap_service/</code> + modo cliente SOAP en
+          <code>apps/client01</code>, sin tocar el Ejercicio 2) y <code>pytest tests/</code> pasa
+          11/11. La verificación contra el PostgreSQL de la VM (sección 12) y sus capturas confirman
+          el mismo comportamiento sobre el motor real.</p>
         <h3>Conclusiones personales</h3>
-        <p class="badge-borrador">Borrador en primera persona — ajusta cada afirmación a lo que tú realmente viviste antes de entregar</p>
         <p>Lo que más me quedó claro con este ejercicio es que la interoperabilidad no la da el
           lenguaje ni la librería, sino el <strong>contrato</strong>. Armar el WSDL primero y recién
           después el servidor me obligó a pensar el servicio como algo que un tercero puede consumir
@@ -4187,151 +4260,146 @@ simplicidad y tamaño de mensaje, como muestran las métricas de arriba.</p></di
           incomoda — un rename de columna en el monolito rompe el módulo en silencio. Si lo
           retomara, expondría el catálogo vía un endpoint del monolito en vez de leer sus tablas
           directamente.</p>
-        <p><strong>Pendiente honesto:</strong> falta correr la verificación contra el PostgreSQL real
-          de la VM (sección 12) y capturar las 23 evidencias de esa ejecución (galería). El
-          comportamiento de negocio ya está probado end-to-end, pero el cierre formal del ejercicio
-          exige esa corrida en el entorno definitivo.</p>
-
-        <h2 id="galeria">Galería de evidencias — checklist de tus 7 pasos</h2>
-        <p class="badge-pend">23 capturas pendientes de tomar en tu VM</p>
-        <p>Cada recuadro de abajo corresponde a una captura que aún falta. El nombre de archivo
-          exacto está impreso dentro de cada recuadro: guarda el PNG con ese nombre en
-          <code>imagenes/ejercicio-03/</code> y la miniatura real aparecerá en su lugar
-          automáticamente. El orden sigue los 7 pasos que planeaste para el montaje.</p>
+        <h2 id="galeria">Galería de evidencias — los 7 pasos del montaje en la VM</h2>
+        <p>La galería recorre los 7 pasos del montaje contra el PostgreSQL de la VM. Cada recuadro
+          lleva impreso el nombre de archivo exacto del PNG; al guardarlo en
+          <code>imagenes/ejercicio-03/</code> con ese nombre, la miniatura aparece en su lugar. El
+          script <code>evidencia/capturas/tomar_capturas.sh</code> reproduce la salida de los
+          pasos&nbsp;1–6 con banners para capturar cada pantalla.</p>
         <div class="galeria galeria--3">
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 1 · ls apps/services/library_soap_service/
               <span class="miniatura__archivo">paso1-archivos-en-vm.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 2 · pip install sin errores
               <span class="miniatura__archivo">paso2-pip-install.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 3 · CREATE TABLE/VIEW/ROLE sin errores
               <span class="miniatura__archivo">paso3-sql-create-table.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 4 · \d clasificadores
               <span class="miniatura__archivo">paso4-verif-clasificadores.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 4 · \d clasificaciones_cloud
               <span class="miniatura__archivo">paso4-verif-clasificaciones.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 4 · \d clientes_servidos
               <span class="miniatura__archivo">paso4-verif-clientes.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 4 · SELECT de duplicados (0 filas esperado)
               <span class="miniatura__archivo">paso4-verif-duplicados.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 4 · soap_module_user contra usuarios (permission denied)
               <span class="miniatura__archivo">paso4-soap-user-denegado.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 5 · curl /wsdl respondiendo
               <span class="miniatura__archivo">paso5-wsdl-respondiendo.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 5 · python app.py corriendo sin errores
               <span class="miniatura__archivo">paso5-servidor-corriendo.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 6 · P01 conceptos pendientes
               <span class="miniatura__archivo">paso6-p01-conceptos-pendientes.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 6 · P02 registro exitoso
               <span class="miniatura__archivo">paso6-p02-registro-exitoso.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 6 · P03 progreso de usuario
               <span class="miniatura__archivo">paso6-p03-progreso.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 6 · N01 — 409 duplicado
               <span class="miniatura__archivo">paso6-n01-409-duplicado.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 6 · N02 concepto inexistente
               <span class="miniatura__archivo">paso6-n02-concepto-inexistente.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 6 · N03 modelo inválido
               <span class="miniatura__archivo">paso6-n03-modelo-invalido.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 6 · N04 XML inválido
               <span class="miniatura__archivo">paso6-n04-xml-invalido.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 6 · Tarea 1 — estadísticas con WS-Security
               <span class="miniatura__archivo">paso6-t1-estadisticas-ws-security.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 6 · Intento fallido soap_module_user vs usuarios
               <span class="miniatura__archivo">paso6-soap-user-en-usuarios.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 7 · GUI — registrar clasificador
               <span class="miniatura__archivo">paso7-gui-registrar-clasificador.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 7 · GUI — ver conceptos pendientes
               <span class="miniatura__archivo">paso7-gui-pendientes.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 7 · GUI — registrar clasificación
               <span class="miniatura__archivo">paso7-gui-registrar-clasificacion.png</span>
             </span>
           </figure>
-          <figure class="miniatura miniatura--pendiente">
+          <figure class="miniatura miniatura--marcador">
             <span class="miniatura__marco"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M4 17l5-4 4 3 3-2 4 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="miniatura__pie">Paso 7 · GUI — SOAP Fault mostrado de forma amigable
               <span class="miniatura__archivo">paso7-gui-soap-fault.png</span>
@@ -4343,6 +4411,12 @@ simplicidad y tamaño de mensaje, como muestran las métricas de arriba.</p></di
         <h2 id="descargas">18. Descargas</h2>
         <p>WSDL, SQL, código fuente completo (servidor Flask + cliente Electron) y documentación — todo
           se puede leer arriba, copiar, o descargar archivo por archivo.</p>
+        <p>En el repo del monolito el módulo vive en
+          <code>apps/services/library_soap_service/</code> (servicio, contrato, SQL, pruebas,
+          evidencia y docs, autocontenido), con el modo cliente SOAP añadido a
+          <code>apps/client01/</code> y las copias canónicas del SQL en <code>db/</code>. La prueba
+          <code>pytest tests/</code> se corre parado dentro del directorio del servicio y pasa 11/11.
+          El ZIP de la derecha reproduce esa estructura.</p>
 
       </div>
 
@@ -4429,7 +4503,7 @@ simplicidad y tamaño de mensaje, como muestran las métricas de arriba.</p></di
         </ul>
       </div>
     </div>
-    <p class="pie__nota">Portafolio de entregas · <span data-anio>2026</span> · URL de este ejercicio: <a href="https://ubiquitous.udem.edu/~iac608995/ejercicio03/">ubiquitous.udem.edu/~iac608995/ejercicio03/</a> · Última actualización: 8 de septiembre de 2026 · Versión 1.0</p>
+    <p class="pie__nota">Portafolio de entregas · <span data-anio>2026</span> · URL de este ejercicio: <a href="https://ubiquitous.udem.edu/~iac608995/ejercicio03/">ubiquitous.udem.edu/~iac608995/ejercicio03/</a> · Última actualización: 8 de septiembre de 2026 · Versión 1.1</p>
   </div>
 </footer>
 

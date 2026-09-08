@@ -1,0 +1,8 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:udem:iac:libreria:soap">
+  <soap:Body>
+    <tns:RegistrarClasificacionResponse>
+      <tns:idClasificacion>2</tns:idClasificacion>
+      <tns:mensaje>Clasificaci&#243;n registrada correctamente.</tns:mensaje>
+    </tns:RegistrarClasificacionResponse>
+  </soap:Body>
+</soap:Envelope>

@@ -1,0 +1,68 @@
+{
+  "_previo_registrar_clasificador": {
+    "request": "<?xml version=\"1.0\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:RegistrarClasificadorRequest>\n<tns:nombre>Ricardo</tns:nombre><tns:apellido>Jáuregui</tns:apellido><tns:correo>ricardo@udem.edu</tns:correo>\n</tns:RegistrarClasificadorRequest></soap:Body></soap:Envelope>",
+    "status": 200,
+    "response": "<?xml version='1.0' encoding='utf-8'?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:RegistrarClasificadorResponse><tns:idClasificador>1</tns:idClasificador></tns:RegistrarClasificadorResponse></soap:Body></soap:Envelope>"
+  },
+  "P01_conceptos_pendientes": {
+    "request": "<?xml version=\"1.0\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:ObtenerConceptosPendientesRequest/></soap:Body></soap:Envelope>",
+    "status": 200,
+    "response": "<?xml version='1.0' encoding='utf-8'?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:ObtenerConceptosPendientesResponse><tns:concepto><tns:isbn>978-0-307-47472-8</tns:isbn><tns:tituloLibro>Cien años de soledad</tns:tituloLibro><tns:categoria>Novela, Realismo mágico</tns:categoria><tns:idConcepto>7</tns:idConcepto><tns:nombreConcepto>Realismo mágico</tns:nombreConcepto></tns:concepto><tns:concepto><tns:isbn>978-0-14-118776-1</tns:isbn><tns:tituloLibro>1984</tns:tituloLibro><tns:categoria>Ciencia ficción</tns:categoria><tns:idConcepto>12</tns:idConcepto><tns:nombreConcepto>Distopía</tns:nombreConcepto></tns:concepto></tns:ObtenerConceptosPendientesResponse></soap:Body></soap:Envelope>"
+  },
+  "P02_registrar_iaas": {
+    "request": "<?xml version=\"1.0\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:RegistrarClasificacionRequest>\n<tns:idClasificador>1</tns:idClasificador><tns:isbn>978-0-307-47472-8</tns:isbn>\n<tns:idConcepto>7</tns:idConcepto><tns:modeloCloud>IaaS</tns:modeloCloud>\n</tns:RegistrarClasificacionRequest></soap:Body></soap:Envelope>",
+    "status": 200,
+    "response": "<?xml version='1.0' encoding='utf-8'?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:RegistrarClasificacionResponse><tns:idClasificacion>1</tns:idClasificacion><tns:mensaje>Clasificación registrada correctamente.</tns:mensaje></tns:RegistrarClasificacionResponse></soap:Body></soap:Envelope>"
+  },
+  "N01_repetir_clasificacion": {
+    "request": "<?xml version=\"1.0\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:RegistrarClasificacionRequest>\n<tns:idClasificador>1</tns:idClasificador><tns:isbn>978-0-307-47472-8</tns:isbn>\n<tns:idConcepto>7</tns:idConcepto><tns:modeloCloud>IaaS</tns:modeloCloud>\n</tns:RegistrarClasificacionRequest></soap:Body></soap:Envelope>",
+    "status": 409,
+    "response": "<?xml version='1.0' encoding='utf-8'?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><soap:Fault><faultcode>soap:Client</faultcode><faultstring>Este clasificador ya registró una clasificación para ese concepto de ese libro.</faultstring><detail><tns:LibreriaFaultDetail><tns:codigo>CLASIFICACION_DUPLICADA</tns:codigo><tns:descripcion>Este clasificador ya registró una clasificación para ese concepto de ese libro.</tns:descripcion></tns:LibreriaFaultDetail></detail></soap:Fault></soap:Body></soap:Envelope>"
+  },
+  "N02_concepto_inexistente": {
+    "request": "<?xml version=\"1.0\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:RegistrarClasificacionRequest>\n<tns:idClasificador>1</tns:idClasificador><tns:isbn>978-0-307-47472-8</tns:isbn>\n<tns:idConcepto>9999</tns:idConcepto><tns:modeloCloud>PaaS</tns:modeloCloud>\n</tns:RegistrarClasificacionRequest></soap:Body></soap:Envelope>",
+    "status": 400,
+    "response": "<?xml version='1.0' encoding='utf-8'?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><soap:Fault><faultcode>soap:Client</faultcode><faultstring>Ese concepto no está definido para ese libro.</faultstring><detail><tns:LibreriaFaultDetail><tns:codigo>CONCEPTO_NO_ENCONTRADO</tns:codigo><tns:descripcion>Ese concepto no está definido para ese libro.</tns:descripcion></tns:LibreriaFaultDetail></detail></soap:Fault></soap:Body></soap:Envelope>"
+  },
+  "N03_modelo_invalido": {
+    "request": "<?xml version=\"1.0\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:RegistrarClasificacionRequest>\n<tns:idClasificador>1</tns:idClasificador><tns:isbn>978-0-14-118776-1</tns:isbn>\n<tns:idConcepto>12</tns:idConcepto><tns:modeloCloud>Xaas</tns:modeloCloud>\n</tns:RegistrarClasificacionRequest></soap:Body></soap:Envelope>",
+    "status": 400,
+    "response": "<?xml version='1.0' encoding='utf-8'?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><soap:Fault><faultcode>soap:Client</faultcode><faultstring>'Xaas' no es un modelo Cloud válido (debe ser IaaS, PaaS, SaaS o FaaS).</faultstring><detail><tns:LibreriaFaultDetail><tns:codigo>DATOS_INVALIDOS</tns:codigo><tns:descripcion>'Xaas' no es un modelo Cloud válido (debe ser IaaS, PaaS, SaaS o FaaS).</tns:descripcion></tns:LibreriaFaultDetail></detail></soap:Fault></soap:Body></soap:Envelope>"
+  },
+  "N04_xml_invalido": {
+    "request": "<soap:Envelope><soap:Body>",
+    "status": 400,
+    "response": "<?xml version='1.0' encoding='utf-8'?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><soap:Fault><faultcode>soap:Client</faultcode><faultstring>XML mal formado: unbound prefix: line 1, column 0</faultstring><detail><tns:LibreriaFaultDetail><tns:codigo>ENVELOPE_INVALIDO</tns:codigo><tns:descripcion>XML mal formado: unbound prefix: line 1, column 0</tns:descripcion></tns:LibreriaFaultDetail></detail></soap:Fault></soap:Body></soap:Envelope>"
+  },
+  "P03_progreso_usuario": {
+    "request": "<?xml version=\"1.0\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:ObtenerProgresoUsuarioRequest>\n<tns:idClasificador>1</tns:idClasificador>\n</tns:ObtenerProgresoUsuarioRequest></soap:Body></soap:Envelope>",
+    "status": 200,
+    "response": "<?xml version='1.0' encoding='utf-8'?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:ObtenerProgresoUsuarioResponse><tns:idClasificador>1</tns:idClasificador><tns:totalClasificados>1</tns:totalClasificados><tns:totalPendientes>1</tns:totalPendientes></tns:ObtenerProgresoUsuarioResponse></soap:Body></soap:Envelope>"
+  },
+  "T1a_estadisticas_sin_credenciales": {
+    "request": "<?xml version=\"1.0\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:ObtenerEstadisticasPorModeloRequest/></soap:Body></soap:Envelope>",
+    "status": 401,
+    "response": "<?xml version='1.0' encoding='utf-8'?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><soap:Fault><faultcode>soap:Client</faultcode><faultstring>Esta operación requiere credenciales en soap:Header (wsse:UsernameToken).</faultstring><detail><tns:LibreriaFaultDetail><tns:codigo>CREDENCIALES_INVALIDAS</tns:codigo><tns:descripcion>Esta operación requiere credenciales en soap:Header (wsse:UsernameToken).</tns:descripcion></tns:LibreriaFaultDetail></detail></soap:Fault></soap:Body></soap:Envelope>"
+  },
+  "T1b_estadisticas_credenciales_correctas": {
+    "request": "<?xml version=\"1.0\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\n<soap:Header><wsse:Security><wsse:UsernameToken>\n<wsse:Username>admin-estadisticas</wsse:Username><wsse:Password>clave-secreta-2026</wsse:Password>\n</wsse:UsernameToken></wsse:Security></soap:Header>\n<soap:Body><tns:ObtenerEstadisticasPorModeloRequest/></soap:Body></soap:Envelope>",
+    "status": 200,
+    "response": "<?xml version='1.0' encoding='utf-8'?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><tns:ObtenerEstadisticasPorModeloResponse><tns:totalIaaS>1</tns:totalIaaS><tns:totalPaaS>0</tns:totalPaaS><tns:totalSaaS>0</tns:totalSaaS><tns:totalFaaS>0</tns:totalFaaS></tns:ObtenerEstadisticasPorModeloResponse></soap:Body></soap:Envelope>"
+  },
+  "T1c_estadisticas_credenciales_incorrectas": {
+    "request": "<?xml version=\"1.0\"?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\" xmlns:wsse=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">\n<soap:Header><wsse:Security><wsse:UsernameToken>\n<wsse:Username>admin-estadisticas</wsse:Username><wsse:Password>clave-mala</wsse:Password>\n</wsse:UsernameToken></wsse:Security></soap:Header>\n<soap:Body><tns:ObtenerEstadisticasPorModeloRequest/></soap:Body></soap:Envelope>",
+    "status": 401,
+    "response": "<?xml version='1.0' encoding='utf-8'?>\n<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\"><soap:Body><soap:Fault><faultcode>soap:Client</faultcode><faultstring>Usuario o contraseña inválidos.</faultstring><detail><tns:LibreriaFaultDetail><tns:codigo>CREDENCIALES_INVALIDAS</tns:codigo><tns:descripcion>Usuario o contraseña inválidos.</tns:descripcion></tns:LibreriaFaultDetail></detail></soap:Fault></soap:Body></soap:Envelope>"
+  },
+  "_wsdl_bytes": 15360,
+  "zeep_ObtenerConceptosPendientes": {
+    "resultado_python": "[{\n    'isbn': '978-0-14-118776-1',\n    'tituloLibro': '1984',\n    'categoria': 'Ciencia ficción',\n    'idConcepto': 12,\n    'nombreConcepto': 'Distopía'\n}]",
+    "request": "<soap-env:Envelope xmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap-env:Body>\n    <ns0:ObtenerConceptosPendientesRequest xmlns:ns0=\"urn:udem:iac:libreria:soap\"/>\n  </soap-env:Body>\n</soap-env:Envelope>\n",
+    "response": "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\">\n  <soap:Body>\n    <tns:ObtenerConceptosPendientesResponse>\n      <tns:concepto>\n        <tns:isbn>978-0-14-118776-1</tns:isbn>\n        <tns:tituloLibro>1984</tns:tituloLibro>\n        <tns:categoria>Ciencia ficci&#243;n</tns:categoria>\n        <tns:idConcepto>12</tns:idConcepto>\n        <tns:nombreConcepto>Distop&#237;a</tns:nombreConcepto>\n      </tns:concepto>\n    </tns:ObtenerConceptosPendientesResponse>\n  </soap:Body>\n</soap:Envelope>\n"
+  },
+  "zeep_RegistrarClasificacion": {
+    "resultado_python": "{\n    'idClasificacion': 2,\n    'mensaje': 'Clasificación registrada correctamente.'\n}",
+    "request": "<soap-env:Envelope xmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n  <soap-env:Body>\n    <ns0:RegistrarClasificacionRequest xmlns:ns0=\"urn:udem:iac:libreria:soap\">\n      <ns0:idClasificador>1</ns0:idClasificador>\n      <ns0:isbn>978-0-14-118776-1</ns0:isbn>\n      <ns0:idConcepto>12</ns0:idConcepto>\n      <ns0:modeloCloud>SaaS</ns0:modeloCloud>\n    </ns0:RegistrarClasificacionRequest>\n  </soap-env:Body>\n</soap-env:Envelope>\n",
+    "response": "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tns=\"urn:udem:iac:libreria:soap\">\n  <soap:Body>\n    <tns:RegistrarClasificacionResponse>\n      <tns:idClasificacion>2</tns:idClasificacion>\n      <tns:mensaje>Clasificaci&#243;n registrada correctamente.</tns:mensaje>\n    </tns:RegistrarClasificacionResponse>\n  </soap:Body>\n</soap:Envelope>\n"
+  }
+}

@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:udem:iac:libreria:soap"><soap:Body><soap:Fault><faultcode>soap:Client</faultcode><faultstring>'Xaas' no es un modelo Cloud válido (debe ser IaaS, PaaS, SaaS o FaaS).</faultstring><detail><tns:LibreriaFaultDetail><tns:codigo>DATOS_INVALIDOS</tns:codigo><tns:descripcion>'Xaas' no es un modelo Cloud válido (debe ser IaaS, PaaS, SaaS o FaaS).</tns:descripcion></tns:LibreriaFaultDetail></detail></soap:Fault></soap:Body></soap:Envelope>

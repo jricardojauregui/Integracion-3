@@ -1,0 +1,58 @@
+CAPTURAS PENDIENTES DEL EJERCICIO 03 (módulo SOAP)
+==================================================
+
+Estas 23 capturas requieren PostgreSQL + el servicio Flask + la GUI Electron
+corriendo en tu VM. NO se pueden generar en el entorno donde se armó el
+módulo (sin Postgres). Este directorio trae:
+
+  - LEEME.txt          (este archivo): los 23 nombres exactos + qué muestra cada uno
+  - tomar_capturas.sh  : script que ejecuta los comandos de los pasos 1-6 con
+                         banners; corre cada bloque en tu VM y captura la pantalla.
+
+Guarda cada PNG con EXACTAMENTE el nombre indicado. Si más adelante armas el
+reporte web, la galería de ejercicios/ejercicio-03.html los mostrará solo.
+
+Orden = los 7 pasos del montaje en la VM.
+
+PASO 1 — archivos en la VM
+  paso1-archivos-en-vm.png        ls -R apps/services/library_soap_service/
+
+PASO 2 — ambiente Python
+  paso2-pip-install.png           pip install -r requirements.txt sin errores
+
+PASO 3 — SQL del módulo
+  paso3-sql-create-table.png      psql -f sql/soap_module.sql + _procedures + _privileges
+                                  + _migracion, todos sin errores (CREATE TABLE/VIEW/ROLE)
+
+PASO 4 — verificación del esquema propio
+  paso4-verif-clasificadores.png  \d clasificadores
+  paso4-verif-clasificaciones.png \d clasificaciones_cloud
+  paso4-verif-clientes.png        \d clientes_servidos
+  paso4-verif-duplicados.png      SELECT ... GROUP BY (id_clasificador,isbn,id_concepto)
+                                  HAVING count(*)>1  -> 0 filas
+  paso4-soap-user-denegado.png    conectado COMO soap_module_user:
+                                  SELECT * FROM usuarios LIMIT 1;  -> permission denied
+
+PASO 5 — servicio arriba
+  paso5-servidor-corriendo.png    python app.py corriendo sin errores
+  paso5-wsdl-respondiendo.png     curl http://localhost:5050/wsdl  -> XML del contrato
+
+PASO 6 — operaciones vía curl (usar los XML de ../xml/*_request.xml)
+  paso6-p01-conceptos-pendientes.png   P01  ObtenerConceptosPendientes -> 200 + lista
+  paso6-p02-registro-exitoso.png       P02  RegistrarClasificacion IaaS -> 200 + idClasificacion
+  paso6-p03-progreso.png               P03  ObtenerProgresoUsuario -> 200 + totales
+  paso6-n01-409-duplicado.png          N01  repetir P02 -> HTTP 409 CLASIFICACION_DUPLICADA
+  paso6-n02-concepto-inexistente.png   N02  idConcepto=9999 -> 400 CONCEPTO_NO_ENCONTRADO
+  paso6-n03-modelo-invalido.png        N03  modeloCloud=Xaas -> 400 DATOS_INVALIDOS
+  paso6-n04-xml-invalido.png           N04  envelope sin cerrar -> 400 ENVELOPE_INVALIDO
+  paso6-t1-estadisticas-ws-security.png T1b ObtenerEstadisticasPorModelo con
+                                       wsse:UsernameToken correcto -> 200 + conteos
+  paso6-soap-user-en-usuarios.png      (repite paso4-soap-user-denegado desde un
+                                       cliente SQL, dejando ver la query y el error)
+
+PASO 7 — GUI Electron en modo SOAP (apps/client01, npm start) — capturas MANUALES
+  paso7-gui-registrar-clasificador.png    formulario nombre/apellido/correo -> id
+  paso7-gui-pendientes.png                lista de conceptos pendientes en la GUI
+  paso7-gui-registrar-clasificacion.png   elegir modelo Cloud y registrar -> ok
+  paso7-gui-soap-fault.png                repetir la misma -> Fault mostrado amigable
+                                          (MENSAJES_FAULT, Tarea 2)

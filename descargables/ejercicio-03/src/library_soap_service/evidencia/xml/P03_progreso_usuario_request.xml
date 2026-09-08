@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:udem:iac:libreria:soap"><soap:Body><tns:ObtenerProgresoUsuarioRequest>
+<tns:idClasificador>1</tns:idClasificador>
+</tns:ObtenerProgresoUsuarioRequest></soap:Body></soap:Envelope>

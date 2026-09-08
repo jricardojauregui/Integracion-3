@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:udem:iac:libreria:soap"><soap:Body><tns:ObtenerEstadisticasPorModeloResponse><tns:totalIaaS>1</tns:totalIaaS><tns:totalPaaS>0</tns:totalPaaS><tns:totalSaaS>0</tns:totalSaaS><tns:totalFaaS>0</tns:totalFaaS></tns:ObtenerEstadisticasPorModeloResponse></soap:Body></soap:Envelope>

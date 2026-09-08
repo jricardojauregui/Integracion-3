@@ -1,0 +1,13 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="urn:udem:iac:libreria:soap">
+  <soap:Body>
+    <tns:ObtenerConceptosPendientesResponse>
+      <tns:concepto>
+        <tns:isbn>978-0-14-118776-1</tns:isbn>
+        <tns:tituloLibro>1984</tns:tituloLibro>
+        <tns:categoria>Ciencia ficci&#243;n</tns:categoria>
+        <tns:idConcepto>12</tns:idConcepto>
+        <tns:nombreConcepto>Distop&#237;a</tns:nombreConcepto>
+      </tns:concepto>
+    </tns:ObtenerConceptosPendientesResponse>
+  </soap:Body>
+</soap:Envelope>
