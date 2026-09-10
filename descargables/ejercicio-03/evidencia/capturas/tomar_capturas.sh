@@ -33,10 +33,15 @@ banner "paso2-pip-install.png"
 echo "# ejecuta manualmente y captura:  pip install -r requirements.txt"
 
 banner "paso3-sql-create-table.png"
-for f in soap_module.sql soap_module_procedures.sql soap_module_privileges.sql soap_module_migracion_correo_estadisticas.sql; do
+# privilegios AL FINAL: otorga sobre las vistas / stored procedure de los
+# tres archivos anteriores. PGURL_OWNER (superusuario/owner) para privileges.
+PGURL_OWNER="${PGURL_OWNER:-$PGURL}"
+for f in soap_module.sql soap_module_procedures.sql soap_module_migracion_correo_estadisticas.sql; do
   echo "--- psql -f sql/$f ---"
-  psql "$PGURL" -v ON_ERROR_STOP=1 -f "$SVC_DIR/sql/$f" || echo "(revisa credenciales / rol owner para privileges)"
+  psql "$PGURL" -v ON_ERROR_STOP=1 -f "$SVC_DIR/sql/$f"
 done
+echo "--- psql -f sql/soap_module_privileges.sql (como owner) ---"
+psql "$PGURL_OWNER" -v ON_ERROR_STOP=1 -f "$SVC_DIR/sql/soap_module_privileges.sql" || echo "(corre este archivo como el superusuario/owner de la base)"
 
 banner "paso4-verif-clasificadores.png";  psql "$PGURL" -c '\d clasificadores'
 banner "paso4-verif-clasificaciones.png"; psql "$PGURL" -c '\d clasificaciones_cloud'

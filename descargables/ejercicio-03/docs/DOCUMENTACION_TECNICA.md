@@ -112,10 +112,12 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env   # editar con credenciales reales
 
+# Orden importante: los privilegios van al final, cuando ya existen todas
+# las vistas y el stored procedure que otorgan.
 psql -U library_user -d library -f sql/soap_module.sql
 psql -U library_user -d library -f sql/soap_module_procedures.sql
-psql -U postgres     -d library -f sql/soap_module_privileges.sql
 psql -U library_user -d library -f sql/soap_module_migracion_correo_estadisticas.sql
+psql -U postgres     -d library -f sql/soap_module_privileges.sql
 
 python app.py   # sirve /wsdl y /soap en el puerto de .env (default 5050)
 ```

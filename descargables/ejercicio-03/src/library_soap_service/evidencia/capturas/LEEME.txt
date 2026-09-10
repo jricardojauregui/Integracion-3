@@ -20,9 +20,12 @@ PASO 1 — archivos en la VM
 PASO 2 — ambiente Python
   paso2-pip-install.png           pip install -r requirements.txt sin errores
 
-PASO 3 — SQL del módulo
-  paso3-sql-create-table.png      psql -f sql/soap_module.sql + _procedures + _privileges
-                                  + _migracion, todos sin errores (CREATE TABLE/VIEW/ROLE)
+PASO 3 — SQL del módulo (EN ESTE ORDEN; privileges al final)
+  paso3-sql-create-table.png      psql -f sql/soap_module.sql
+                                  psql -f sql/soap_module_procedures.sql
+                                  psql -f sql/soap_module_migracion_correo_estadisticas.sql
+                                  psql -f sql/soap_module_privileges.sql   (como owner/superusuario)
+                                  todos sin errores (CREATE TABLE/VIEW/ROLE, GRANT)
 
 PASO 4 — verificación del esquema propio
   paso4-verif-clasificadores.png  \d clasificadores

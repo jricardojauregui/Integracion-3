@@ -11,6 +11,14 @@
 
 -- Ejecutar como el superusuario/owner de la base (no desde la app).
 -- Cambiar la contraseña antes de usar en un entorno real.
+--
+-- ORDEN: este archivo va SIEMPRE AL FINAL, después de
+--   1) soap_module.sql
+--   2) soap_module_procedures.sql                      (crea vw_conceptos_pendientes, sp_registrar_clasificacion)
+--   3) soap_module_migracion_correo_estadisticas.sql   (crea vw_estadisticas_por_modelo)
+-- porque otorga privilegios sobre todos esos objetos. Si se corre antes,
+-- los GRANT sobre lo que aún no existe fallan (el resto sí se aplica);
+-- basta re-correr este archivo tras crear el objeto faltante.
 
 -- IF NOT EXISTS evita que re-correr este archivo completo (p. ej. tras
 -- agregar los GRANT de vw_conceptos_pendientes/sp_registrar_clasificacion
