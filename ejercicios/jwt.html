@@ -67,6 +67,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* ============ Barra superior ============ */
 .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;padding:9px 16px;background:var(--panel);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:10px;min-width:0;margin-right:auto}
+.back-home{display:inline-flex;align-items:center;padding:6px 12px;border:1px solid var(--line2);border-radius:var(--r-sm);background:var(--panel2);color:var(--fg);font-size:.85rem;font-weight:600;text-decoration:none;white-space:nowrap}
+.back-home:hover{background:var(--accent-bg);color:var(--accent);border-color:var(--accent)}
 .logo{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;font:700 12px/1 var(--mono);letter-spacing:-.02em;background:linear-gradient(135deg,var(--c-h) 0 33%,var(--c-p) 33% 66%,var(--c-s) 66%);color:#fff;flex:none}
 .brand strong{display:block;font-size:.98rem;line-height:1.2}
 .brand small{display:block;font-size:.76rem;line-height:1.2}
@@ -422,6 +424,7 @@ th{font-size:.74rem;text-transform:uppercase;letter-spacing:.04em;color:var(--mu
 </head>
 <body>
 <header class="topbar" id="topbar">
+  <a class="back-home" href="../index.html" aria-label="Regresar al portafolio">← Inicio</a>
   <div class="brand">
     <span class="logo" aria-hidden="true">JWT</span>
     <div><strong>Laboratorio JWT · ES256</strong><small>Sandbox con criptografía real (Web Crypto) · nada sale de tu navegador</small></div>
@@ -960,7 +963,7 @@ th{font-size:.74rem;text-transform:uppercase;letter-spacing:.04em;color:var(--mu
     <div class="card-h"><h2>Autoevaluación</h2><span class="grow"></span><span id="quizScore" class="badge info">0 / 0</span><button class="btn sm" id="quizReset">Reiniciar</button></div>
     <div class="quiz" id="quiz"></div>
   </div>
-  <div class="pager"><a class="btn" href="#s5">← Refresh tokens</a><a class="btn" href="#s0">Volver al inicio ↺</a></div>
+  <div class="pager"><a class="btn" href="#s5">← Refresh tokens</a><a class="btn" href="#s0">Volver al inicio ↺</a><a class="btn pri" href="../index.html">Regresar al portafolio</a></div>
 </section>
   </main>
 </div>
